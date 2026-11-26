@@ -1,0 +1,2213 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>وجهة</title>
+<style>:root{color-scheme:light}body{margin:0;font:14px system-ui,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600&family=Readex+Pro:wght@500;700&display=swap">
+<style>
+/* Layout: sticky header with three views (guide, courses, sports); guide is a form panel beside ranked results, the other two are filter rows above a card grid. */
+*{box-sizing:border-box}
+@property --bg{syntax:"<color>";inherits:true;initial-value:#FFFFFF}
+@property --surface{syntax:"<color>";inherits:true;initial-value:#FFFFFF}
+@property --tint{syntax:"<color>";inherits:true;initial-value:#F0F8F7}
+@property --ink{syntax:"<color>";inherits:true;initial-value:#14232B}
+@property --muted{syntax:"<color>";inherits:true;initial-value:#566A72}
+@property --line{syntax:"<color>";inherits:true;initial-value:#D9E8E5}
+@property --accent{syntax:"<color>";inherits:true;initial-value:#0B6E6A}
+@property --accent-ink{syntax:"<color>";inherits:true;initial-value:#064B48}
+@property --soft{syntax:"<color>";inherits:true;initial-value:#D6EEEA}
+@property --on-accent{syntax:"<color>";inherits:true;initial-value:#FFFFFF}
+:root{
+  --bg:#FFFFFF;
+  --surface:#FFFFFF;
+  --on-accent:#FFFFFF;
+  --tint:#F0F8F7;
+  --ink:#14232B;
+  --muted:#566A72;
+  --line:#D9E8E5;
+  --accent:#0B6E6A;
+  --accent-ink:#064B48;
+  --soft:#D6EEEA;
+  --signal:#F0B429;
+  --signal-ink:#3A2A00;
+  --blue:#1F5FD8;--blue-soft:#DCE8FD;--blue-ink:#123F96;
+  --green:#0E8559;--green-lt:#2FB57F;--green-soft:#D5F2E4;--green-ink:#0A5C3E;
+  --red:#D93A40;--red-soft:#FDDDDF;--red-ink:#8E1F24;
+  --yellow:#F5B700;--yellow-soft:#FFF0BE;--yellow-ink:#6B4A00;
+  --font-display:'Readex Pro','Segoe UI',Tahoma,sans-serif;
+  --font-body:'IBM Plex Sans Arabic','Segoe UI',Tahoma,sans-serif;
+  color-scheme:light;
+}
+body{background:var(--bg);color:var(--ink);font-family:var(--font-body);font-size:16px;line-height:1.75;direction:rtl}
+body{transition:--bg .6s ease,--surface .6s ease,--tint .6s ease,--ink .6s ease,--muted .6s ease,--line .6s ease,--accent .6s ease,--accent-ink .6s ease,--soft .6s ease,--on-accent .6s ease}
+#bgpat{position:fixed;inset:0;z-index:0;pointer-events:none;background:var(--accent);opacity:.08;transition:opacity .3s ease;-webkit-mask-size:110px 110px;mask-size:110px 110px;-webkit-mask-repeat:repeat;mask-repeat:repeat}
+body[data-th^="c-code"] #bgpat,body[data-th="s-mart"] #bgpat{opacity:.1}
+main,footer{position:relative;z-index:1}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+h1,h2,h3{font-family:var(--font-display);line-height:1.45;text-wrap:balance;margin:0}
+h1{font-size:clamp(1.7rem,4.5vw,2.5rem);font-weight:700}
+h2{font-size:1.1rem;font-weight:600}
+h3{font-size:1.05rem;font-weight:600}
+p{margin:0}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--signal);outline-offset:2px}
+.in{max-width:1040px;margin-inline:auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);border-bottom:1px solid var(--line)}
+.top .in{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:4px 20px;padding-block:8px}
+.brand{display:flex;align-items:center;gap:8px;font-family:var(--font-display);font-weight:700;font-size:1.5rem;color:var(--blue);text-decoration:none}
+.brand svg{width:24px;height:24px}
+nav{display:flex;gap:4px}
+nav a{padding:8px 14px;text-decoration:none;font-weight:500;color:var(--muted);border-bottom:3px solid transparent}
+nav a:hover{color:var(--ink)}
+nav a[aria-current="page"]{color:var(--ink);border-bottom-color:var(--yellow)}
+nav a[data-v="guide"][aria-current="page"]{border-bottom-color:var(--blue)}
+nav a[data-v="courses"][aria-current="page"]{border-bottom-color:var(--green)}
+nav a[data-v="teachers"][aria-current="page"]{border-bottom-color:var(--yellow)}
+nav a[data-v="sports"][aria-current="page"]{border-bottom-color:var(--red)}
+@media (max-width:560px){nav{width:100%}nav a{flex:1;text-align:center;padding-inline:6px}}
+
+main .in{padding-block:28px 48px}
+.lead{display:grid;gap:10px;max-width:46rem;margin-bottom:26px}
+.kicker{color:var(--accent);font-weight:600}
+.sub{color:var(--muted)}
+
+.split{display:grid;grid-template-columns:minmax(0,340px) minmax(0,1fr);gap:24px;align-items:start}
+@media (max-width:820px){.split{grid-template-columns:minmax(0,1fr)}}
+.panel{background:var(--tint);border:1px solid var(--line);border-radius:10px;padding:20px;display:grid;gap:12px}
+.hint{color:var(--muted);font-size:.9rem}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{font:inherit;font-size:.92rem;line-height:1.5;padding:6px 14px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer}
+.chip:hover{border-color:var(--accent)}
+.chip[aria-pressed="true"]{background:var(--soft);border-color:var(--accent);color:var(--accent-ink);font-weight:600}
+
+.results{display:grid;gap:14px;min-width:0}
+.res{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:20px;display:grid;gap:12px;min-width:0}
+.res.first{border:2px solid var(--accent)}
+.rank{justify-self:start;font-size:.8rem;font-weight:600;line-height:1.7;padding:0 10px;border-radius:4px;background:var(--soft);color:var(--accent)}
+.res.first .rank{background:var(--signal);color:var(--signal-ink)}
+.why{color:var(--muted);font-size:.92rem}
+dl{display:grid;grid-template-columns:auto minmax(0,1fr);gap:8px 16px;margin:0}
+dt{color:var(--muted);font-size:.9rem}
+dd{margin:0}
+.tags{display:flex;flex-wrap:wrap;gap:6px}
+.tag{font-size:.88rem;line-height:1.5;padding:2px 10px;border:1px solid var(--line);border-radius:6px}
+.empty{background:var(--surface);border:1px dashed var(--line);border-radius:10px;padding:20px;color:var(--muted)}
+.go{display:inline-flex;align-items:center;gap:6px;font-weight:600;color:var(--accent);text-decoration:underline;text-underline-offset:4px}
+.go svg{width:14px;height:14px;flex:none}
+.note{color:var(--muted);font-size:.9rem}
+
+.filters{display:grid;gap:10px;margin-bottom:16px}
+.frow{display:grid;grid-template-columns:4.5rem minmax(0,1fr);gap:10px;align-items:start}
+.flabel{color:var(--muted);font-size:.9rem;padding-top:6px}
+@media (max-width:560px){.frow{grid-template-columns:minmax(0,1fr);gap:4px}.flabel{padding-top:0}}
+.count{color:var(--muted);font-size:.9rem;margin-bottom:12px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,270px),1fr));gap:14px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:16px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.card p{color:var(--muted);font-size:.93rem}
+.card .go{margin-top:auto;padding-top:6px;align-self:flex-start;font-size:.93rem}
+.meta{display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:.82rem;color:var(--muted)}
+.lvl{display:inline-flex;align-items:center;gap:6px;font-weight:600;color:var(--ink)}
+.bars{display:inline-flex;align-items:flex-end;gap:2px}
+.bars i{display:block;width:4px;height:6px;background:var(--line)}
+.bars i:nth-child(2){height:9px}
+.bars i:nth-child(3){height:12px}
+.bars[data-n="1"] i:nth-child(-n+1),.bars[data-n="2"] i:nth-child(-n+2),.bars[data-n="3"] i{background:var(--accent)}
+.kidtag{background:var(--signal);color:var(--signal-ink);padding:0 8px;border-radius:4px;font-weight:600}
+
+.tips{margin-top:28px;background:var(--tint);border:1px solid var(--line);border-radius:10px;padding:18px 20px}
+.tips ul,.tips ol{margin:8px 0 0;padding-inline-start:1.4rem;display:grid;gap:4px}
+.more{margin-top:18px}
+
+/* ---- themes: each section / course field / sport re-colors the whole page ---- */
+body[data-th="guide"]{--bg:#F9FBFF;--surface:#FFFFFF;--tint:#F3F7FF;--ink:#14232B;--muted:#566A72;--line:#D3E0F8;--accent:#1F5FD8;--accent-ink:#123F96;--soft:#DCE8FD;--on-accent:#FFFFFF}
+body[data-th="teachers"]{--bg:#FFFDF5;--surface:#FFFFFF;--tint:#FFFBEB;--ink:#14232B;--muted:#566A72;--line:#F1E2A6;--accent:#A86400;--accent-ink:#6B4A00;--soft:#FFF0BE;--on-accent:#FFFFFF}
+body[data-th="courses"]{--bg:#F8FCFA;--surface:#FFFFFF;--tint:#F1FAF5;--ink:#14232B;--muted:#566A72;--line:#CFE9DB;--accent:#0E8559;--accent-ink:#0A5C3E;--soft:#D5F2E4;--on-accent:#FFFFFF}
+body[data-th="sports"]{--bg:#FFF9F9;--surface:#FFFFFF;--tint:#FFF4F4;--ink:#14232B;--muted:#566A72;--line:#F6D3D5;--accent:#C42F35;--accent-ink:#8E1F24;--soft:#FDDDDF;--on-accent:#FFFFFF}
+body[data-th="c-math"]{--bg:#F9F9FF;--surface:#FFFFFF;--tint:#F5F5FF;--ink:#14232B;--muted:#566A72;--line:#D9D9F8;--accent:#4F46E5;--accent-ink:#3730A3;--soft:#E0E0FD;--on-accent:#FFFFFF}
+body[data-th="c-biz"]{--bg:#F7FDFE;--surface:#FFFFFF;--tint:#F0FBFD;--ink:#14232B;--muted:#566A72;--line:#C4E6EF;--accent:#0E7490;--accent-ink:#0A5468;--soft:#CFEFF7;--on-accent:#FFFFFF}
+body[data-th="c-skill"]{--bg:#FFFAFC;--surface:#FFFFFF;--tint:#FFF5F9;--ink:#14232B;--muted:#566A72;--line:#F5D0E1;--accent:#BE185D;--accent-ink:#8C1145;--soft:#FBD9E8;--on-accent:#FFFFFF}
+body[data-th="c-design"]{--bg:#FEFAFF;--surface:#FFFFFF;--tint:#FDF5FE;--ink:#14232B;--muted:#566A72;--line:#EBCBEF;--accent:#A21CAF;--accent-ink:#761380;--soft:#F3D6F6;--on-accent:#FFFFFF}
+body[data-th="s-foot"]{--bg:#F7FCF8;--surface:#FFFFFF;--tint:#F1FAF3;--ink:#14232B;--muted:#566A72;--line:#CDE9D6;--accent:#15803D;--accent-ink:#0F5A2B;--soft:#D7F2DF;--on-accent:#FFFFFF}
+body[data-th="s-bask"]{--bg:#FFFAF5;--surface:#FFFFFF;--tint:#FFF6EE;--ink:#14232B;--muted:#566A72;--line:#F7D9C4;--accent:#C2410C;--accent-ink:#8A2E08;--soft:#FDE2D0;--on-accent:#FFFFFF}
+body[data-th="s-swim"]{--bg:#F6FBFF;--surface:#FFFFFF;--tint:#EFF9FF;--ink:#14232B;--muted:#566A72;--line:#C8E3F4;--accent:#0369A1;--accent-ink:#024F7A;--soft:#D2ECFA;--on-accent:#FFFFFF}
+body[data-th="s-tt"]{--bg:#F8FAFF;--surface:#FFFFFF;--tint:#F2F6FF;--ink:#14232B;--muted:#566A72;--line:#D0DDF8;--accent:#1D4ED8;--accent-ink:#1639A1;--soft:#DBE5FD;--on-accent:#FFFFFF}
+body[data-th="s-vol"]{--bg:#FFFDF3;--surface:#FFFFFF;--tint:#FFFBEA;--ink:#14232B;--muted:#566A72;--line:#F3E0A8;--accent:#B45309;--accent-ink:#7C3A06;--soft:#FDEBC4;--on-accent:#FFFFFF}
+body[data-th="s-mart"]{--bg:#140F10;--surface:#1E1617;--tint:#1A1213;--ink:#F3E9E7;--muted:#BFA9A5;--line:#3A2527;--accent:#FF6B6B;--accent-ink:#FF9C9C;--soft:#3A1A1C;--on-accent:#2A0808;--blue:#7AA2FF;--blue-ink:#A9C1FF;--green:#34D399;--green-soft:#0F3D2B;--green-ink:#7EE7B5;--red:#FF6B72;--red-soft:#4A1B1F;--red-ink:#FFA3A8;--yellow-soft:#3F3200;--yellow-ink:#FFD866;color-scheme:dark}
+body[data-th="s-fit"]{--bg:#FBFEF4;--surface:#FFFFFF;--tint:#F7FCEB;--ink:#14232B;--muted:#566A72;--line:#DDEBC0;--accent:#4D7C0F;--accent-ink:#365A0A;--soft:#E2F2C4;--on-accent:#FFFFFF}
+body[data-th="c-code"]{--bg:#0B1220;--surface:#111A2E;--tint:#0F1930;--ink:#E6EDF7;--muted:#9FB0C8;--line:#22314F;--accent:#34D399;--accent-ink:#7EE7B5;--soft:#0F3B36;--on-accent:#052E22;--blue:#7AA2FF;--blue-ink:#A9C1FF;--green:#34D399;--green-soft:#0F3D2B;--green-ink:#7EE7B5;--red:#FF6B72;--red-soft:#4A1B1F;--red-ink:#FFA3A8;--yellow-soft:#3F3200;--yellow-ink:#FFD866;color-scheme:dark}
+#bgpat[data-p="bask"]{-webkit-mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' fill='none' stroke='black' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='50' cy='50' r='24'/%3E%3Cline x1='50' y1='26' x2='50' y2='74'/%3E%3Cline x1='26' y1='50' x2='74' y2='50'/%3E%3Cpath d='M34 33 Q50 50 34 67'/%3E%3Cpath d='M66 33 Q50 50 66 67'/%3E%3C/svg%3E");mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' fill='none' stroke='black' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='50' cy='50' r='24'/%3E%3Cline x1='50' y1='26' x2='50' y2='74'/%3E%3Cline x1='26' y1='50' x2='74' y2='50'/%3E%3Cpath d='M34 33 Q50 50 34 67'/%3E%3Cpath d='M66 33 Q50 50 66 67'/%3E%3C/svg%3E")}
+#bgpat[data-p="biz"]{-webkit-mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' fill='none' stroke='black' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='30' cy='34' r='13'/%3E%3Cpolyline points='46,84 46,66 62,66 62,52 78,52 78,38 92,38'/%3E%3C/svg%3E");mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' fill='none' stroke='black' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='30' cy='34' r='13'/%3E%3Cpolyline points='46,84 46,66 62,66 62,52 78,52 78,38 92,38'/%3E%3C/svg%3E")}
+#bgpat[data-p="code"]{-webkit-mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' fill='none' stroke='black' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='28,34 14,50 28,66'/%3E%3Cpolyline points='72,34 86,50 72,66'/%3E%3Cline x1='56' y1='30' x2='44' y2='70'/%3E%3C/svg%3E");mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' fill='none' stroke='black' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='28,34 14,50 28,66'/%3E%3Cpolyline points='72,34 86,50 72,66'/%3E%3Cline x1='56' y1='30' x2='44' y2='70'/%3E%3C/svg%3E")}
+#bgpat[data-p="design"]{-webkit-mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' fill='none' stroke='black' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='14' y='18' width='24' height='24'/%3E%3Ccircle cx='70' cy='30' r='13'/%3E%3Cpolygon points='50,86 66,58 82,86'/%3E%3C/svg%3E");mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' fill='none' stroke='black' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='14' y='18' width='24' height='24'/%3E%3Ccircle cx='70' cy='30' r='13'/%3E%3Cpolygon points='50,86 66,58 82,86'/%3E%3C/svg%3E")}
+#bgpat[data-p="fit"]{-webkit-mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' fill='none' stroke='black' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='0,50 30,50 38,28 48,72 58,38 66,50 100,50'/%3E%3C/svg%3E");mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' fill='none' stroke='black' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='0,50 30,50 38,28 48,72 58,38 66,50 100,50'/%3E%3C/svg%3E")}
+#bgpat[data-p="foot"]{-webkit-mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' fill='none' stroke='black' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='50' cy='50' r='22'/%3E%3Ccircle cx='50' cy='50' r='2'/%3E%3Cline x1='0' y1='50' x2='100' y2='50'/%3E%3C/svg%3E");mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' fill='none' stroke='black' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='50' cy='50' r='22'/%3E%3Ccircle cx='50' cy='50' r='2'/%3E%3Cline x1='0' y1='50' x2='100' y2='50'/%3E%3C/svg%3E")}
+#bgpat[data-p="guide"]{-webkit-mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' fill='none' stroke='black' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='50' cy='50' r='20'/%3E%3Cpolygon points='50,34 56,50 50,66 44,50'/%3E%3C/svg%3E");mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' fill='none' stroke='black' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='50' cy='50' r='20'/%3E%3Cpolygon points='50,34 56,50 50,66 44,50'/%3E%3C/svg%3E")}
+#bgpat[data-p="mart"]{-webkit-mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' fill='none' stroke='black' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M22 52 L22 34 C22 14 58 12 58 34 L58 52 Z'/%3E%3Cpath d='M22 36 C8 34 6 52 22 50'/%3E%3Cpath d='M36 26 C47 24 54 30 54 40'/%3E%3Crect x='24' y='52' width='32' height='14' rx='2'/%3E%3Cpath d='M24 59 H56'/%3E%3Cg transform='translate%28100 42%29 scale%28-0.7 0.7%29' stroke-width='4.3'%3E%3Cpath d='M22 52 L22 34 C22 14 58 12 58 34 L58 52 Z'/%3E%3Cpath d='M22 36 C8 34 6 52 22 50'/%3E%3Cpath d='M36 26 C47 24 54 30 54 40'/%3E%3Crect x='24' y='52' width='32' height='14' rx='2'/%3E%3Cpath d='M24 59 H56'/%3E%3C/g%3E%3C/svg%3E");mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' fill='none' stroke='black' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M22 52 L22 34 C22 14 58 12 58 34 L58 52 Z'/%3E%3Cpath d='M22 36 C8 34 6 52 22 50'/%3E%3Cpath d='M36 26 C47 24 54 30 54 40'/%3E%3Crect x='24' y='52' width='32' height='14' rx='2'/%3E%3Cpath d='M24 59 H56'/%3E%3Cg transform='translate%28100 42%29 scale%28-0.7 0.7%29' stroke-width='4.3'%3E%3Cpath d='M22 52 L22 34 C22 14 58 12 58 34 L58 52 Z'/%3E%3Cpath d='M22 36 C8 34 6 52 22 50'/%3E%3Cpath d='M36 26 C47 24 54 30 54 40'/%3E%3Crect x='24' y='52' width='32' height='14' rx='2'/%3E%3Cpath d='M24 59 H56'/%3E%3C/g%3E%3C/svg%3E");-webkit-mask-size:130px 130px;mask-size:130px 130px}
+#bgpat[data-p="math"]{-webkit-mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' fill='none' stroke='black' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cline x1='20' y1='30' x2='40' y2='30'/%3E%3Cline x1='30' y1='20' x2='30' y2='40'/%3E%3Cline x1='62' y1='72' x2='82' y2='72'/%3E%3Cline x1='60' y1='24' x2='80' y2='38'/%3E%3Cline x1='80' y1='24' x2='60' y2='38'/%3E%3C/svg%3E");mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' fill='none' stroke='black' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cline x1='20' y1='30' x2='40' y2='30'/%3E%3Cline x1='30' y1='20' x2='30' y2='40'/%3E%3Cline x1='62' y1='72' x2='82' y2='72'/%3E%3Cline x1='60' y1='24' x2='80' y2='38'/%3E%3Cline x1='80' y1='24' x2='60' y2='38'/%3E%3C/svg%3E")}
+#bgpat[data-p="skill"]{-webkit-mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' fill='none' stroke='black' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 24 h36 a6 6 0 0 1 6 6 v16 a6 6 0 0 1 -6 6 h-20 l-10 9 v-9 h-6 a6 6 0 0 1 -6 -6 v-16 a6 6 0 0 1 6 -6z'/%3E%3Ccircle cx='74' cy='74' r='6'/%3E%3C/svg%3E");mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' fill='none' stroke='black' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 24 h36 a6 6 0 0 1 6 6 v16 a6 6 0 0 1 -6 6 h-20 l-10 9 v-9 h-6 a6 6 0 0 1 -6 -6 v-16 a6 6 0 0 1 6 -6z'/%3E%3Ccircle cx='74' cy='74' r='6'/%3E%3C/svg%3E")}
+#bgpat[data-p="swim"]{-webkit-mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' fill='none' stroke='black' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M0 40 Q12.5 28 25 40 T50 40 T75 40 T100 40'/%3E%3Cpath d='M0 72 Q12.5 60 25 72 T50 72 T75 72 T100 72'/%3E%3C/svg%3E");mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' fill='none' stroke='black' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M0 40 Q12.5 28 25 40 T50 40 T75 40 T100 40'/%3E%3Cpath d='M0 72 Q12.5 60 25 72 T50 72 T75 72 T100 72'/%3E%3C/svg%3E")}
+#bgpat[data-p="teachers"]{-webkit-mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' fill='none' stroke='black' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cline x1='0' y1='30' x2='100' y2='30'/%3E%3Cline x1='0' y1='60' x2='100' y2='60'/%3E%3Cline x1='0' y1='90' x2='100' y2='90'/%3E%3C/svg%3E");mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' fill='none' stroke='black' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cline x1='0' y1='30' x2='100' y2='30'/%3E%3Cline x1='0' y1='60' x2='100' y2='60'/%3E%3Cline x1='0' y1='90' x2='100' y2='90'/%3E%3C/svg%3E")}
+#bgpat[data-p="tt"]{-webkit-mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' fill='none' stroke='black' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='30' cy='35' r='9'/%3E%3Ccircle cx='72' cy='70' r='5'/%3E%3Cline x1='8' y1='52' x2='92' y2='52' stroke-dasharray='4 6'/%3E%3C/svg%3E");mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' fill='none' stroke='black' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='30' cy='35' r='9'/%3E%3Ccircle cx='72' cy='70' r='5'/%3E%3Cline x1='8' y1='52' x2='92' y2='52' stroke-dasharray='4 6'/%3E%3C/svg%3E")}
+#bgpat[data-p="vol"]{-webkit-mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' fill='none' stroke='black' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='50' cy='50' r='24'/%3E%3Cpath d='M27 40 Q50 22 73 40'/%3E%3Cpath d='M27 60 Q50 42 73 60'/%3E%3C/svg%3E");mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' fill='none' stroke='black' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='50' cy='50' r='24'/%3E%3Cpath d='M27 40 Q50 22 73 40'/%3E%3Cpath d='M27 60 Q50 42 73 60'/%3E%3C/svg%3E")}
+
+
+/* teachers */
+.tlist{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,320px),1fr));gap:14px}
+.teacher{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.teacher .thead{display:flex;flex-direction:column;gap:8px}
+.teacher h3{overflow-wrap:anywhere}
+.teacher p{color:var(--muted);font-size:.93rem}
+.teacher .go{margin-top:auto;padding-top:4px;align-self:flex-start;font-size:.93rem}
+.subs{align-self:flex-start;display:inline-flex;align-items:baseline;gap:6px;background:var(--yellow-soft);color:var(--yellow-ink);padding:2px 12px;border-radius:999px}
+.subs strong{font-family:var(--font-display);font-size:1.15rem}
+.subs span{font-size:.85rem}
+.subs.none{background:var(--tint);border:1px dashed var(--line);color:var(--muted)}
+.teacher.on{border:2px solid var(--accent)}
+.pick{margin-top:auto;font:inherit;font-weight:600;line-height:1.5;padding:8px 16px;border-radius:999px;border:2px solid var(--accent);background:var(--surface);color:var(--accent-ink);cursor:pointer;align-self:flex-start}
+.pick:hover{background:var(--soft)}
+.pick[aria-pressed="true"]{background:var(--accent);color:var(--on-accent)}
+.reviews{margin-top:28px;background:var(--tint);border:1px solid var(--line);border-radius:14px;padding:20px;display:grid;gap:14px;scroll-margin-top:84px}
+.reviews h2{font-size:1.3rem}
+.rhead{display:grid;gap:2px}
+.months{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,150px),1fr));gap:10px}
+.month{display:flex;flex-direction:column;gap:2px;padding:12px 14px;border-radius:10px;background:var(--surface);border:1px solid var(--line);text-decoration:none;min-width:0}
+.month strong{font-family:var(--font-display)}
+.month span{font-size:.85rem;color:var(--muted)}
+a.month:hover{border-color:var(--accent);transform:translateY(-2px)}
+a.month{transition:transform .2s ease,border-color .2s ease}
+.month.cur{background:var(--yellow-soft);border-color:var(--yellow)}
+.month.cur span{color:var(--yellow-ink);font-weight:600}
+.month.direct{border-color:var(--accent)}
+.month.direct span{color:var(--accent-ink);font-weight:600}
+.warnbox{background:var(--red-soft);color:var(--red-ink);border:2px solid var(--red);border-radius:10px;padding:10px 14px;font-weight:600}
+.frow.reveal{animation:rise .5s cubic-bezier(.2,.8,.2,1) both}
+.chip.pop-in{animation:popIn .45s cubic-bezier(.3,1.5,.5,1) both}
+@keyframes popIn{from{opacity:0;transform:scale(.5) translateY(12px)}to{opacity:1;transform:none}}
+.hint-step{color:var(--muted);background:var(--tint);border:1px dashed var(--line);border-radius:10px;padding:10px 14px}
+.month.soon{border-style:dashed;background:transparent;opacity:.75}
+.tag.warn{border-color:var(--yellow);color:var(--yellow-ink);background:var(--yellow-soft)}
+
+/* ---- guide: conversation + catalogs ---- */
+.gtabs{display:flex;flex-wrap:wrap;gap:4px;border-bottom:1px solid var(--line);margin-bottom:20px}
+.gtab{font:inherit;font-weight:600;padding:10px 16px;border:0;border-bottom:3px solid transparent;background:none;color:var(--muted);cursor:pointer}
+.gtab:hover{color:var(--ink)}
+.gtab[aria-selected="true"]{color:var(--accent-ink);border-bottom-color:var(--accent)}
+.chatbox{background:var(--tint);border:1px solid var(--line);border-radius:14px;padding:16px;display:grid;gap:14px;max-width:48rem}
+.gbar{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.gbar .track{flex:1 1 120px;height:6px;background:var(--line);border-radius:999px;overflow:hidden}
+.gbar .track i{display:block;height:100%;background:var(--accent);border-radius:999px;transition:width .4s ease}
+.gbar span{font-size:.88rem;color:var(--muted)}
+.gback{font:inherit;font-size:.88rem;color:var(--accent-ink);background:none;border:1px solid var(--line);border-radius:999px;padding:2px 12px;cursor:pointer}
+.gback:hover{border-color:var(--accent)}
+.chatlog{display:grid;gap:10px;align-content:start}
+.bub{max-width:90%;padding:10px 14px;border-radius:14px;min-width:0;overflow-wrap:anywhere;animation:rise .4s ease both}
+.bub.bot{justify-self:start;background:var(--surface);border:1px solid var(--line);border-start-start-radius:4px}
+.bub.me{justify-self:end;background:var(--accent);color:var(--on-accent);border-start-end-radius:4px}
+.bub.typing{display:inline-flex;gap:5px;align-items:center;padding:14px 16px}
+.bub.typing i{width:7px;height:7px;border-radius:50%;background:var(--muted);animation:bob 1s ease-in-out infinite}
+.bub.typing i:nth-child(2){animation-delay:.15s}
+.bub.typing i:nth-child(3){animation-delay:.3s}
+.gopts{display:flex;flex-wrap:wrap;gap:8px}
+.chip.opt{font-size:.97rem;padding:8px 16px;text-align:start}
+.hint.wide{flex-basis:100%}
+.gres{display:grid;gap:14px;max-width:48rem;margin-top:16px}
+.gres .res h3{font-size:1.2rem}
+.rbtns{display:flex;flex-wrap:wrap;gap:10px}
+.dul{margin:0;padding-inline-start:1.2rem;display:grid;gap:2px}
+.dul li{line-height:1.7}
+.sm{display:block;font-size:.86rem;color:var(--muted)}
+.subh{font-weight:600;color:var(--accent-ink);margin-top:4px}
+.trk{border-top:1px dashed var(--line);padding-top:10px;display:grid;gap:6px}
+.tag.ok{border-color:var(--green);color:var(--green-ink);background:var(--green-soft)}
+.gh{font-size:1.3rem;margin:8px 0 2px}
+.dgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,340px),1fr));gap:14px;margin:12px 0 26px}
+.dcard{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px;display:grid;gap:10px;min-width:0;align-content:start}
+details.dcard{padding:0}
+details.dcard>summary{cursor:pointer;list-style:none;padding:14px 16px;display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;font-weight:600}
+details.dcard>summary::-webkit-details-marker{display:none}
+details.dcard>summary::after{content:"+";font-size:1.3rem;color:var(--accent);margin-inline-start:auto}
+details.dcard[open]>summary::after{content:"−"}
+details.dcard>dl,details.dcard>.go{margin:0 16px 14px}
+details.dcard>.go{display:inline-flex;margin-bottom:16px}
+.sn{font-family:var(--font-display);font-size:1.05rem}
+.gsearch{font:inherit;padding:8px 14px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--ink);width:100%;max-width:340px}
+.gtools{display:grid;gap:10px;margin-bottom:12px}
+.srcs{margin-top:28px}
+.srcs ul{margin:6px 0 0;padding-inline-start:1.2rem}
+
+/* page transitions */
+main{overflow-x:clip}
+.pg-f{animation:pgF .5s cubic-bezier(.2,.8,.2,1) both}
+.pg-b{animation:pgB .5s cubic-bezier(.2,.8,.2,1) both}
+@keyframes pgF{from{opacity:0;transform:translateX(-40px)}to{opacity:1;transform:none}}
+@keyframes pgB{from{opacity:0;transform:translateX(40px)}to{opacity:1;transform:none}}
+#pgbar{position:fixed;top:env(safe-area-inset-top,0px);left:0;right:0;height:3px;z-index:20;transform:scaleX(0);transform-origin:right;pointer-events:none;opacity:0}
+#pgbar.go{animation:pgbar .65s ease-out both}
+@keyframes pgbar{0%{transform:scaleX(0);opacity:1}70%{transform:scaleX(1);opacity:1}100%{transform:scaleX(1);opacity:0}}
+
+/* hero + corner icons */
+.pl-it{transform:scale(0);transform-box:fill-box;transform-origin:center bottom;transition:transform .6s cubic-bezier(.3,1.5,.5,1)}
+
+.bub.wide{max-width:100%;width:100%}
+.cmp{display:grid;gap:8px}
+.cmph{font-family:var(--font-display);font-size:1.05rem}
+.cmprow{display:grid;grid-template-columns:7rem minmax(0,1fr) minmax(0,1fr);gap:6px 12px;padding:8px 0;border-top:1px solid var(--line);font-size:.93rem}
+.cmprow.head{font-weight:700;color:var(--accent-ink);border-top:0}
+.cmprow .cl{font-weight:600}
+@media (max-width:640px){
+  .cmprow{grid-template-columns:minmax(0,1fr)}
+  .cmprow.head{display:none}
+  .cmprow [data-l]::before{content:attr(data-l) ": ";font-weight:700;color:var(--accent-ink)}
+}
+
+.month.direct{display:grid;gap:6px;align-content:start}
+.macts{display:flex;flex-wrap:wrap;gap:6px}
+.mact{font:inherit;font-size:.85rem;font-weight:600;line-height:1.5;padding:4px 12px;border-radius:999px;border:1px solid var(--accent);background:var(--surface);color:var(--accent-ink);text-decoration:none;cursor:pointer}
+.mact:hover{background:var(--soft)}
+.mact.watch{background:var(--accent);color:var(--on-accent)}
+.mact.watch:hover{filter:brightness(1.1)}
+.month .mact.off{border-style:dashed;border-color:var(--line);color:var(--muted);font-weight:400;cursor:default;background:transparent}
+.sumbox{background:var(--surface);border:1px solid var(--accent);border-radius:10px;padding:14px 16px;display:grid;gap:8px;scroll-margin-top:84px}
+.sumbox p{margin:0}
+
+.bars4{display:grid;gap:8px}
+.b4{display:grid;grid-template-columns:minmax(0,9rem) minmax(0,1fr) auto;gap:10px;align-items:center;font-size:.93rem}
+.b4 .bar{height:8px;background:var(--line);border-radius:999px;overflow:hidden}
+.b4 .bar i{display:block;height:100%;background:var(--accent);border-radius:999px}
+@media (max-width:480px){.b4{grid-template-columns:minmax(0,1fr) auto}.b4 .bar{grid-column:1/-1;order:3}}
+.dgrid1{display:grid;gap:10px}
+.sechead{font-weight:700;color:var(--accent-ink)}
+.cmpin{padding:0 16px 14px}
+
+.badge-out{justify-self:start;background:var(--green-soft);color:var(--green-ink);border-radius:999px;padding:0 10px;font-size:.8rem;font-weight:600}
+.month .badge-out{color:var(--green-ink);font-weight:600}
+
+.sumh{margin:8px 0 0;font-family:var(--font-display);font-size:1.05rem;color:var(--accent-ink)}
+.sumn{margin-top:4px}
+.dul .dul{margin-top:2px}
+
+.quiz{background:var(--surface);border:1px solid var(--accent);border-radius:10px;padding:14px 16px;display:grid;gap:12px;scroll-margin-top:84px;outline:none}
+.quiz p{margin:0}
+.qhead{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px}
+.qhead h3{margin:0}
+.qq{font-weight:600;line-height:1.7}
+.qopts{display:grid;gap:8px}
+.qopt{font:inherit;text-align:start;line-height:1.7;padding:10px 14px;border-radius:10px;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer;min-width:0;overflow-wrap:anywhere}
+.qopt:hover{border-color:var(--accent);background:var(--soft)}
+.qopt.ok{border:2px solid var(--green);background:var(--green-soft);color:var(--green-ink);cursor:default}
+.qopt.bad{border:2px solid var(--red);background:var(--red-soft);color:var(--red-ink);cursor:default}
+.qopt.dim{color:var(--muted);cursor:default}
+.qopt.dim:hover{border-color:var(--line);background:var(--surface)}
+.qfb.ok{color:var(--green-ink);font-weight:600}
+.qfb.bad{color:var(--red-ink);font-weight:600}
+.qscore{font-family:var(--font-display);font-size:1.4rem;color:var(--accent-ink)}
+.qweak{background:var(--tint);border-radius:10px;padding:10px 14px;line-height:1.7}
+.qtbl{display:grid;gap:8px}
+.qrow{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(60px,1fr) auto;gap:10px;align-items:center}
+.qt{min-width:0;overflow-wrap:anywhere}
+.qbar{height:8px;background:var(--line);border-radius:999px;overflow:hidden;display:block}
+.qbar i{display:block;height:100%;border-radius:999px}
+.qbar i.bad{background:var(--red)}.qbar i.mid{background:var(--yellow)}.qbar i.ok{background:var(--green)}
+.qn{font-size:.88rem;color:var(--muted);white-space:nowrap}
+.qn b.bad{color:var(--red-ink)}.qn b.mid{color:var(--yellow-ink)}.qn b.ok{color:var(--green-ink)}
+.qwrong summary{cursor:pointer;font-weight:600}
+.qw{border-top:1px dashed var(--line);padding-top:8px;margin-top:8px;display:grid;gap:4px}
+.qm{color:var(--red-ink)}.qr{color:var(--green-ink)}
+@media (max-width:520px){.qrow{grid-template-columns:1fr;gap:4px}}
+
+/* ---- home ---- */
+main .in{position:relative;z-index:1}
+.hero{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:24px;align-items:center;padding-block:8px 8px}
+@media (max-width:820px){.hero{grid-template-columns:minmax(0,1fr)}}
+.hero .kicker{color:var(--green-ink)}
+.hero h1{font-size:clamp(2rem,6vw,3.2rem);line-height:1.5;margin-top:4px}
+.hero .sub{font-size:1.08rem;max-width:34rem;margin-top:14px}
+.mk{padding:0 .25em;border-radius:12px}
+.mk.b{background:var(--blue-soft);color:var(--blue-ink)}
+.mk.g{background:var(--green-soft);color:var(--green-ink)}
+.btns{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+.btn{font:inherit;font-weight:600;line-height:1.5;padding:10px 22px;border-radius:999px;border:2px solid var(--blue);background:var(--blue);color:#fff;text-decoration:none;cursor:pointer;transition:transform .2s ease,box-shadow .2s ease}
+.btn.alt{background:var(--surface);color:var(--blue-ink)}
+.btn:hover{transform:translateY(-2px);box-shadow:0 6px 14px rgba(31,95,216,.22)}
+.hint-dn{display:flex;align-items:center;gap:8px;color:var(--muted);margin-top:18px;font-size:.92rem}
+.hint-dn svg{width:18px;height:18px;flex:none;animation:nudge 1.4s ease-in-out infinite}
+.scene{width:100%;max-width:440px;height:auto;justify-self:center}
+.float{animation:bob 4s ease-in-out infinite}
+.float.f2{animation-duration:4.6s;animation-delay:-1.3s}
+.float.f3{animation-duration:5.2s;animation-delay:-2.2s}
+.sun{transform-box:fill-box;transform-origin:center;animation:spin 20s linear infinite}
+.draw{stroke-dasharray:100;animation:draw 1.2s ease-out .2s both}
+.leaf{transform-box:fill-box;animation:grow .8s cubic-bezier(.3,1.5,.5,1) both;animation-delay:var(--d,0s)}
+.leaf.lr{transform-origin:100% 100%}
+.leaf.ll{transform-origin:0% 100%}
+.leaf.lm,.leaf.lc{transform-origin:50% 100%}
+.rise{animation:rise .7s cubic-bezier(.2,.8,.2,1) both;animation-delay:var(--d,0s)}
+@keyframes rise{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+@keyframes draw{from{stroke-dashoffset:100}to{stroke-dashoffset:0}}
+@keyframes grow{from{transform:scale(0)}to{transform:scale(1)}}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes nudge{0%,100%{transform:translateY(0)}50%{transform:translateY(5px)}}
+
+/* scroll reveal: starts slightly faded and offset, so text is readable even before it enters */
+.rv{opacity:.35;transform:translateY(26px);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.8,.2,1);transition-delay:var(--d,0s)}
+.rv.pop{transform:scale(.8) rotate(-5deg)}
+.rv.sprout{transform:scaleY(.2);transform-origin:50% 100%}
+.rv.in{opacity:1;transform:none}
+
+.hsec{margin-top:64px;display:grid;gap:18px}
+.hsec h2,.cta h2{font-size:clamp(1.4rem,3.5vw,1.9rem)}
+.hsec .sub{max-width:44rem;font-size:1.02rem}
+.about{background:var(--blue-soft);border-radius:18px;padding:28px;display:grid;gap:12px}
+.about h2{color:var(--blue-ink)}
+.about p{font-size:1.08rem;max-width:44rem}
+.feats{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));gap:14px}
+.feat{border-radius:16px;padding:18px;display:grid;gap:8px;align-content:start}
+.feat .ic{width:48px;height:48px;border-radius:12px;display:grid;place-items:center;background:var(--surface)}
+.feat .ic svg{width:28px;height:28px}
+.feat p{font-size:.95rem;color:var(--ink)}
+.feat.b{background:var(--blue-soft)}.feat.b h3{color:var(--blue-ink)}.feat.b .ic{color:var(--blue)}
+.feat.g{background:var(--green-soft)}.feat.g h3{color:var(--green-ink)}.feat.g .ic{color:var(--green)}
+.feat.r{background:var(--red-soft)}.feat.r h3{color:var(--red-ink)}.feat.r .ic{color:var(--red)}
+.feat.y{background:var(--yellow-soft)}.feat.y h3{color:var(--yellow-ink)}.feat.y .ic{color:#C98F00}
+.steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+@media (max-width:700px){.steps{grid-template-columns:minmax(0,1fr)}}
+.step{border:2px dashed var(--line);border-radius:16px;padding:18px;display:grid;gap:6px;justify-items:start;align-content:start}
+.step>svg{width:60px;height:60px}
+.step p{color:var(--muted);font-size:.95rem}
+.when{font-weight:600;color:var(--green-ink);font-size:.9rem}
+.who{display:flex;flex-wrap:wrap;gap:10px}
+.pill{padding:8px 18px;border-radius:999px;font-weight:600}
+.pill.y{background:var(--yellow-soft);color:var(--yellow-ink)}
+.pill.g{background:var(--green-soft);color:var(--green-ink)}
+.pill.b{background:var(--blue-soft);color:var(--blue-ink)}
+.pill.r{background:var(--red-soft);color:var(--red-ink)}
+.pill.b2{background:var(--blue);color:#fff}
+.cta{margin-top:64px;display:grid;gap:18px}
+.go3{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,210px),1fr));gap:14px}
+.big{display:flex;flex-direction:column;gap:8px;padding:24px;border-radius:18px;color:#fff;text-decoration:none;min-width:0}
+.big.rv.in{transition:transform .2s ease,box-shadow .2s ease}
+.big:hover{transform:translateY(-4px) rotate(-.6deg);box-shadow:0 12px 26px rgba(0,0,0,.16)}
+.big h3{color:#fff;font-size:1.35rem}
+.big p{color:#fff;font-size:.97rem}
+.big .arrow{margin-top:auto;padding-top:10px;display:inline-flex;align-items:center;gap:6px;font-weight:600}
+.big .arrow svg{width:18px;height:18px;transition:transform .2s ease}
+.big:hover .arrow svg{transform:translateX(-4px)}
+.big.y{background:var(--yellow);color:var(--yellow-ink)}.big.y h3,.big.y p{color:var(--yellow-ink)}
+.big.b{background:var(--blue)}.big.g{background:var(--green)}.big.r{background:var(--red)}
+
+/* plant that grows as you read */
+.plant{position:fixed;z-index:0;pointer-events:none;left:max(8px,env(safe-area-inset-left,0px));bottom:calc(env(safe-area-inset-bottom,0px) + 8px);width:60px;height:auto}
+@media (min-width:900px){.plant{width:104px}}
+#pl-stem{fill:none;stroke:var(--green);stroke-width:5;stroke-linecap:round;stroke-dasharray:100;stroke-dashoffset:100;transition:stroke-dashoffset .6s ease}
+.pl-leaf{fill:var(--green);transform:scale(0);transform-box:fill-box;transition:transform .6s cubic-bezier(.3,1.5,.5,1)}
+.pl-leaf.a{fill:var(--green-lt)}
+.pl-leaf.lr{transform-origin:0% 100%}
+.pl-leaf.ll{transform-origin:100% 100%}
+#pl-flower{transform:scale(0);transform-box:fill-box;transform-origin:center;transition:transform .7s cubic-bezier(.3,1.6,.5,1)}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .rv{opacity:1;transform:none}
+}
+footer .in{padding-block:0 32px;color:var(--muted);font-size:.88rem}
+</style>
+</head>
+<body>
+
+
+<div lang="ar" dir="rtl">
+<header class="top">
+  <div class="in">
+    <a class="brand" href="#home" aria-label="وجهة، الصفحة الرئيسية">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7zm0 9.5a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5z"/></svg>
+      وجهة
+    </a>
+    <nav aria-label="الأقسام">
+      <a href="#home" data-v="home">الرئيسية</a>
+      <a href="#guide" data-v="guide">اختار مسارك</a>
+      <a href="#courses" data-v="courses">كورسات</a>
+      <a href="#teachers" data-v="teachers">مدرسين</a>
+      <a href="#sports" data-v="sports">رياضة</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+<div class="in">
+
+<section id="v-home">
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <defs>
+      <symbol id="ic-ball" viewBox="-64 -64 128 128"><circle r="60" fill="#fff" stroke="var(--ink)" stroke-width="3"/><clipPath id="ballclip"><circle r="59"/></clipPath><g clip-path="url(#ballclip)" fill="var(--ink)"><path d="M0.0 -20.0 L19.0 -6.2 L11.8 16.2 L-11.8 16.2 L-19.0 -6.2Z"/><path d="M0.0 -39.0 L-16.2 -50.7 L-10.0 -69.8 L10.0 -69.8 L16.2 -50.7Z"/><path d="M37.1 -12.1 L43.3 -31.1 L63.3 -31.1 L69.4 -12.1 L53.3 -0.3Z"/><path d="M22.9 31.6 L42.9 31.6 L49.1 50.6 L32.9 62.3 L16.7 50.6Z"/><path d="M-22.9 31.6 L-16.7 50.6 L-32.9 62.3 L-49.1 50.6 L-42.9 31.6Z"/><path d="M-37.1 -12.1 L-53.3 -0.3 L-69.4 -12.1 L-63.3 -31.1 L-43.3 -31.1Z"/></g><g stroke="var(--ink)" stroke-width="3" stroke-linecap="round"><line x1="0.0" y1="-20.0" x2="0.0" y2="-38.0"/><line x1="19.0" y1="-6.2" x2="36.1" y2="-11.7"/><line x1="11.8" y1="16.2" x2="22.3" y2="30.7"/><line x1="-11.8" y1="16.2" x2="-22.3" y2="30.7"/><line x1="-19.0" y1="-6.2" x2="-36.1" y2="-11.7"/></g></symbol>
+      <symbol id="ic-bask" viewBox="-64 -64 128 128">
+        <circle r="60" fill="#EE7A2B" stroke="#7A3410" stroke-width="3"/>
+        <g fill="none" stroke="#7A3410" stroke-width="3" stroke-linecap="round">
+          <line x1="0" y1="-60" x2="0" y2="60"/><line x1="-60" y1="0" x2="60" y2="0"/>
+          <path d="M-43 -42 Q-14 0 -43 42"/><path d="M43 -42 Q14 0 43 42"/>
+        </g>
+      </symbol>
+      <symbol id="ic-code" viewBox="0 0 140 120">
+        <rect x="4" y="4" width="132" height="112" rx="14" fill="var(--blue)"/>
+        <path d="M4 18a14 14 0 0 1 14-14h104a14 14 0 0 1 14 14v12H4z" fill="var(--blue-ink)"/>
+        <circle cx="22" cy="17" r="4.5" fill="var(--red)"/><circle cx="38" cy="17" r="4.5" fill="var(--yellow)"/><circle cx="54" cy="17" r="4.5" fill="var(--green-lt)"/>
+        <g fill="none" stroke="#fff" stroke-width="9" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M50 58 L30 76 L50 94"/><path d="M90 58 L110 76 L90 94"/><path d="M78 52 L62 100"/>
+        </g>
+      </symbol>
+      <symbol id="ic-med" viewBox="0 0 120 120">
+        <circle cx="60" cy="60" r="56" fill="var(--green)"/>
+        <circle cx="60" cy="60" r="48" fill="none" stroke="#fff" stroke-opacity=".45" stroke-width="3"/>
+        <path d="M50 24h20v26h26v20H70v26H50V70H24V50h26z" fill="#fff"/>
+      </symbol>
+      <symbol id="ic-coin" viewBox="0 0 120 120">
+        <circle cx="60" cy="60" r="56" fill="var(--yellow)"/>
+        <circle cx="60" cy="60" r="44" fill="none" stroke="var(--yellow-ink)" stroke-opacity=".55" stroke-width="4"/>
+        <text x="60" y="80" text-anchor="middle" font-size="58" font-weight="700" font-family="Readex Pro,Segoe UI,Arial,sans-serif" fill="var(--yellow-ink)">$</text>
+      </symbol>
+    </defs>
+  </svg>
+
+  <svg class="plant" viewBox="0 0 120 236" aria-hidden="true">
+    <rect x="22" y="222" width="76" height="9" rx="4.5" fill="var(--blue-soft)"/>
+    <g class="pl-it" data-t=".1"><use href="#ic-bask" x="30" y="170" width="60" height="60"/></g>
+    <g class="pl-it" data-t=".3"><use href="#ic-ball" x="30" y="122" width="56" height="56"/></g>
+    <g class="pl-it" data-t=".5"><use href="#ic-code" x="28" y="82" width="60" height="52"/></g>
+    <g class="pl-it" data-t=".7"><use href="#ic-med" x="32" y="44" width="52" height="52"/></g>
+    <g class="pl-it" data-t=".88"><use href="#ic-coin" x="34" y="6" width="48" height="48"/></g>
+  </svg>
+
+  <div class="hero">
+    <div>
+      <p class="kicker rise" style="--d:.05s">للأطفال والطلاب والشباب من كل الأعمار</p>
+      <h1 class="rise" style="--d:.15s">اختار <span class="mk b">طريقك</span>،<br>وتعلّم أي <span class="mk g">مهارة</span></h1>
+      <p class="sub rise" style="--d:.3s">وجهة بتساعدك تعرف تدخل أنهي شعبة وكلية، وتلاقي كورسات وشرح لمهارات ورياضات كتير. وفي كل مرة بتوصل لشرح على يوتيوب تبدأ منه.</p>
+      <div class="btns rise" style="--d:.45s">
+        <a class="btn" href="#guide">ابدأ باختيار مسارك</a>
+        <button class="btn alt" type="button" id="more-btn">اقرا أكتر عن وجهة</button>
+      </div>
+      <p class="hint-dn rise" style="--d:.6s">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>
+        كمّل لتحت وشوف الأيقونات بتتراكم معاك
+      </p>
+    </div>
+
+    <svg class="scene" viewBox="0 0 440 330" role="img" aria-label="كورة قدم وكورة سلة وعلامة برمجة وعلامة طب وعملة، بتتحرك بهدوء">
+      <ellipse cx="220" cy="310" rx="175" ry="13" fill="var(--blue-soft)"/>
+      <g class="float f3"><use href="#ic-med" x="30" y="30" width="96" height="96" transform="rotate(-10 78 78)"/></g>
+      <g class="float f2"><use href="#ic-coin" x="318" y="26" width="88" height="88" transform="rotate(12 362 70)"/></g>
+      <g class="float"><use href="#ic-code" x="128" y="62" width="190" height="162"/></g>
+      <g class="float f2"><use href="#ic-ball" x="14" y="170" width="150" height="150" transform="rotate(-14 89 245)"/></g>
+      <g class="float f3"><use href="#ic-bask" x="290" y="190" width="130" height="130" transform="rotate(10 355 255)"/></g>
+    </svg>
+  </div>
+
+  <section class="hsec" id="story">
+    <div class="about rv">
+      <h2>ليه عملنا وجهة؟</h2>
+      <p>كتير مننا بيتوه بين مئات الفيديوهات والكورسات ومش عارف يبدأ منين، أو بيختار شعبة وكلية من غير ما يعرف هو بيحب إيه فعلًا. «وجهة» بترتبلك الطريق: تحدد الأول إنت رايح فين، وبعدين تلاقي الشرح المناسب ليك.</p>
+    </div>
+  </section>
+
+  <section class="hsec">
+    <h2 class="rv">بتساعدك في إيه؟</h2>
+    <div class="feats">
+      <div class="feat b rv pop" style="--d:.05s">
+        <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M15.5 8.5l-2 5-5 2 2-5z"/></svg></span>
+        <h3>اختيار الشعبة والكلية</h3>
+        <p>بتحدد اللي بتحبه وبنرشحلك المجالات الأقرب ليك مع الشعبة والكليات.</p>
+      </div>
+      <div class="feat g rv pop" style="--d:.15s">
+        <span class="ic"><svg viewBox="0 0 140 120" aria-hidden="true"><use href="#ic-code"/></svg></span>
+        <h3>كورسات بتخصصاتها</h3>
+        <p>برمجة (Frontend وBackend وأمن سيبراني)، ورياضيات، وتجارة، ولغات، وتصميم.</p>
+      </div>
+      <div class="feat r rv pop" style="--d:.25s">
+        <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7l4 3-1.5 4.5h-5L8 10z"/><path d="M12 3v4M16 10l4-1M14.5 14.5l3 3.5M9.5 14.5l-3 3.5M8 10L4 9"/></svg></span>
+        <h3>مهارات رياضية</h3>
+        <p>كرة القدم وكرة السلة والسباحة وغيرهم، مهارة بمهارة وعلى حسب مستواك.</p>
+      </div>
+      <div class="feat y rv pop" style="--d:.35s">
+        <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="6" width="18" height="12" rx="4"/><path d="M10.5 9.5l4 2.5-4 2.5z" fill="currentColor"/></svg></span>
+        <h3>شرح على يوتيوب</h3>
+        <p>أي اختيار بتدوس عليه بيفتحلك شرح تقدر تتعلم منه على طول.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="hsec">
+    <h2 class="rv">إزاي بتشتغل؟</h2>
+    <div class="steps">
+      <div class="step rv" style="--d:.05s">
+        <svg class="rv sprout" style="--d:.2s" viewBox="0 0 60 60" aria-hidden="true">
+          <path d="M8 50H52" stroke="#8A5A2B" stroke-width="4" stroke-linecap="round" fill="none"/>
+          <ellipse cx="30" cy="44" rx="7" ry="5" fill="#8A5A2B"/>
+        </svg>
+        <span class="when">أولًا</span>
+        <h3>اختار القسم</h3>
+        <p>مسارك التعليمي، أو كورسات، أو رياضة.</p>
+      </div>
+      <div class="step rv" style="--d:.2s">
+        <svg class="rv sprout" style="--d:.35s" viewBox="0 0 60 60" aria-hidden="true">
+          <path d="M8 52H52" stroke="#8A5A2B" stroke-width="4" stroke-linecap="round" fill="none"/>
+          <path d="M30 52V30" stroke="var(--green)" stroke-width="4" stroke-linecap="round" fill="none"/>
+          <path d="M30 38C18 38 14 30 16 24C26 24 30 30 30 38Z" fill="var(--green-lt)"/>
+          <path d="M30 32C42 32 46 24 44 18C34 18 30 24 30 32Z" fill="var(--green)"/>
+        </svg>
+        <span class="when">بعدين</span>
+        <h3>حدد التخصص والمستوى</h3>
+        <p>مبتدئ ولا متوسط ولا متقدم، وللأطفال قسم لوحده.</p>
+      </div>
+      <div class="step rv" style="--d:.35s">
+        <svg class="rv sprout" style="--d:.5s" viewBox="0 0 60 60" aria-hidden="true">
+          <path d="M8 54H52" stroke="#8A5A2B" stroke-width="4" stroke-linecap="round" fill="none"/>
+          <path d="M30 54V18" stroke="var(--green)" stroke-width="4" stroke-linecap="round" fill="none"/>
+          <path d="M30 46C18 46 14 38 16 32C26 32 30 38 30 46Z" fill="var(--green-lt)"/>
+          <path d="M30 38C42 38 46 30 44 24C34 24 30 30 30 38Z" fill="var(--green)"/>
+          <circle cx="30" cy="9" r="4" fill="var(--red)"/><circle cx="36" cy="13" r="4" fill="var(--red)"/>
+          <circle cx="24" cy="13" r="4" fill="var(--red)"/><circle cx="30" cy="14" r="3" fill="var(--yellow)"/>
+        </svg>
+        <span class="when">وأخيرًا</span>
+        <h3>افتح الشرح وابدأ</h3>
+        <p>اختار المدرس اللي أسلوبه يعجبك وكمّل معاه.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="hsec">
+    <h2 class="rv">الموقع لمين؟</h2>
+    <p class="sub rv">مفيش سن معين. الأطفال بيلاقوا برمجة بالسحب والإفلات، والطلاب بيلاقوا شرح لموادهم ومساعدة في اختياراتهم، والكبار بيلاقوا مهارات للشغل.</p>
+    <div class="who">
+      <span class="pill y rv pop" style="--d:.05s">أطفال</span>
+      <span class="pill g rv pop" style="--d:.15s">طلاب إعدادي</span>
+      <span class="pill b rv pop" style="--d:.25s">طلاب ثانوي</span>
+      <span class="pill r rv pop" style="--d:.35s">طلاب جامعة وخريجين</span>
+      <span class="pill b2 rv pop" style="--d:.45s">أي حد عايز يتعلم حاجة جديدة</span>
+    </div>
+  </section>
+
+  <section class="cta">
+    <h2 class="rv">جاهز تبدأ؟ اختار وجهتك</h2>
+    <div class="go3">
+      <a class="big b rv" style="--d:.05s" href="#guide">
+        <h3>اختار مسارك</h3>
+        <p>الشعبة والكلية اللي تناسب اهتماماتك.</p>
+        <span class="arrow">ابدأ من هنا <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" d="M17 12H7M11 8l-4 4 4 4"/></svg></span>
+      </a>
+      <a class="big g rv" style="--d:.15s" href="#courses">
+        <h3>كورسات</h3>
+        <p>برمجة ورياضيات وتجارة ولغات وتصميم.</p>
+        <span class="arrow">شوف الكورسات <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" d="M17 12H7M11 8l-4 4 4 4"/></svg></span>
+      </a>
+      <a class="big y rv" style="--d:.2s" href="#teachers">
+        <h3>مواد ومدرسين الثانوي</h3>
+        <p>اختار صفك ومسارك ومادتك، وقارن بين المدرسين بعدد المشتركين.</p>
+        <span class="arrow">شوف المدرسين <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" d="M17 12H7M11 8l-4 4 4 4"/></svg></span>
+      </a>
+      <a class="big r rv" style="--d:.25s" href="#sports">
+        <h3>رياضة</h3>
+        <p>مهارات كرة القدم وغيرها بالشرح.</p>
+        <span class="arrow">شوف الرياضات <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" d="M17 12H7M11 8l-4 4 4 4"/></svg></span>
+      </a>
+    </div>
+  </section>
+</section>
+
+<section id="v-guide" hidden>
+  <div class="lead">
+    <p class="kicker">للطلاب والشباب من كل الأعمار</p>
+    <h1>اتكلم مع وجهة واختار مسارك</h1>
+    <p class="sub">قولنا إنت في أنهي سنة، وهنسألك 20 سؤال عن ميولك ومستواك (ومعاها اختيار النظام لو لسه قبل الثانوي). وبعدها نرشحلك الشعبة أو المسار والكليات الأنسب، مع تفاصيل المواد والمدة والشغل وشروط كل كلية.</p>
+  </div>
+  <div class="gtabs" role="tablist" aria-label="أقسام اختار مسارك">
+    <button type="button" class="gtab" role="tab" id="g-tab-chat" aria-selected="true">محادثة الاختيار</button>
+    <button type="button" class="gtab" role="tab" id="g-tab-tracks" aria-selected="false">دليل الشعب والمسارات</button>
+    <button type="button" class="gtab" role="tab" id="g-tab-colleges" aria-selected="false">دليل الكليات</button>
+  </div>
+
+  <div id="g-p-chat" role="tabpanel">
+    <div class="chatbox">
+      <div class="gbar"><button type="button" class="gback" id="g-back" hidden>رجوع خطوة</button><div class="track"><i id="g-prog"></i></div><span id="g-plabel"></span></div>
+      <div class="chatlog" id="g-log" role="log" aria-live="polite"></div>
+      <div class="gopts" id="g-opts"></div>
+    </div>
+    <div class="gres" id="g-res" hidden aria-live="polite"></div>
+  </div>
+
+  <div id="g-p-tracks" role="tabpanel" hidden>
+    <div id="g-p-tracks-body"></div>
+  </div>
+
+  <div id="g-p-colleges" role="tabpanel" hidden>
+    <div class="gtools">
+      <input type="search" class="gsearch" id="g-colq" placeholder="دور على كلية أو مادة أو وظيفة" aria-label="بحث في الكليات">
+      <div class="chips" id="g-colfam"></div>
+      <p class="count" id="g-colcount" aria-live="polite"></p>
+    </div>
+    <div class="dgrid" id="g-collist"></div>
+  </div>
+
+  <p class="note more">الترشيح ده بيتحسب من إجاباتك بقواعد ثابتة، ومش رأي نهائي. نظام الثانوية والبكالوريا وشروط القبول والتنسيق بتتغير، فراجع إعلان وزارة التربية والتعليم والمجلس الأعلى للجامعات قبل أي قرار. المواد والدرجات من إعلانات منشورة لحد نوفمبر 2026، وتفاصيل الكليات معلومات عامة والأرقام بتختلف من جامعة لجامعة.</p>
+  <div class="srcs note">المصادر:
+    <ul>
+      <li><a href="https://www.masrawy.com/news/education-schooleducation/details/2026/8/17/3034293" target="_blank" rel="noopener noreferrer">مصراوي: مواد ومسارات البكالوريا (أغسطس 2026)</a></li>
+      <li><a href="https://www.youm7.com/story/2026/8/2/مسارات-شهادة-البكالوريا-وطبيعة-الدراسة-وتنسيق-الجامعات-التفاصيل-الكاملة/7501177" target="_blank" rel="noopener noreferrer">اليوم السابع: مسارات البكالوريا وطبيعة الدراسة</a></li>
+      <li><a href="https://www.masrawy.com/news/education-schooleducation/details/2025/9/18/2856643/رسمي-ا-توزيع-درجات-الثانوية-العامة-والبكالوريا-للعام-الدراسي-الجديد" target="_blank" rel="noopener noreferrer">مصراوي: توزيع درجات الثانوية العامة والبكالوريا 2025/2026</a></li>
+      <li><a href="https://www.youm7.com/7282228" target="_blank" rel="noopener noreferrer">اليوم السابع: مواد امتحانات الثانوية العامة 2026</a></li>
+    </ul>
+  </div>
+  <p class="more"><a class="go" href="#courses">عايز تتعلم مهارة؟ شوف الكورسات</a></p>
+</section>
+
+<section id="v-courses" hidden>
+  <div class="lead">
+    <h1>كورسات في مهارات كتير</h1>
+    <p class="sub">اختار المجال، وبعدين التخصص اللي عايزه، وبعدين مستواك. كل كورس بيفتح لك قوائم شرح على يوتيوب تقدر تختار منها.</p>
+  </div>
+  <div class="filters">
+    <div class="frow"><span class="flabel">المجال</span><div class="chips" id="c-cat"></div></div>
+    <div class="frow" id="c-specrow"><span class="flabel">التخصص</span><div class="chips" id="c-spec"></div></div>
+    <div class="frow"><span class="flabel">المستوى</span><div class="chips" id="c-lv"></div></div>
+  </div>
+  <p class="count" id="c-count" aria-live="polite"></p>
+  <div class="grid" id="c-list"></div>
+  <aside class="tips">
+    <h2>إزاي تعرف إن الشرح كويس؟</h2>
+    <ul>
+      <li>شوف تاريخ الفيديو. البرمجة والأدوات بتتغير بسرعة، فالأحدث أحسن.</li>
+      <li>فضّل قائمة تشغيل مرتبة من الأساسيات للمتقدم بدل فيديوهات متفرقة.</li>
+      <li>اقرا التعليقات: لو الناس بتقول إنها اتعلمت وطبّقت، ده مؤشر كويس.</li>
+      <li>جرب أول 10 دقايق. لو المدرس بيشرح بأمثلة عملية وبيفهمك، كمّل معاه.</li>
+    </ul>
+  </aside>
+</section>
+
+<section id="v-teachers" hidden>
+  <div class="lead">
+    <h1>المواد والمدرسين</h1>
+    <p class="sub">اختار صفك، وبعدها مسارك أو شعبتك (من تانية ثانوي)، وهتظهر لك مواد مسارك. اختار المادة وهتلاقي المدرسين اللي بيشرحوها ومعاهم عدد المشتركين، وكل مدرس بيفتح لك شرح المادة على يوتيوب.</p>
+  </div>
+  <div class="filters">
+    <div class="frow"><span class="flabel">1. الصف</span><div class="chips" id="t-gr"></div></div>
+    <div class="frow" id="t-trk-row" hidden><span class="flabel">2. المسار</span><div class="chips" id="t-trk"></div></div>
+    <div class="frow" id="t-subj-row" hidden><span class="flabel" id="t-subj-n">3. المادة</span><div class="chips" id="t-subj"></div></div>
+    <p class="note" id="t-snote" hidden></p>
+  </div>
+  <p class="hint-step" id="t-hint"></p>
+  <p class="count" id="t-count" aria-live="polite"></p>
+  <div class="tlist" id="t-list"></div>
+  <div class="empty" id="t-empty" hidden>
+    مفيش مدرسين متأكدين في المادة دي لسه. تقدر تدور بنفسك:
+    <a class="go" id="t-find" href="#" target="_blank" rel="noopener noreferrer">ابحث عن شرح <span id="t-find-label"></span> على يوتيوب</a>
+  </div>
+  <div class="reviews" id="t-reviews" hidden aria-live="polite"></div>
+  <p class="note more">المواد والدرجات من إعلانات وزارة التربية والتعليم المنشورة، وهتتغير لو الوزارة عدلتها. الأسماء والأعداد اتجمعت من صفحات إحصائيات القنوات، والتاريخ جنب كل رقم هو وقت القراءة، والأعداد بتتغير. الصفوف اتحددت من وصف القنوات وعناوين فيديوهاتها، فتأكد من الصف جوه القناة. القايمة مش كاملة.
+    <a class="go" id="t-find2" href="#" target="_blank" rel="noopener noreferrer">دور على مدرسين تانيين على يوتيوب</a>
+  </p>
+</section>
+
+<section id="v-sports" hidden>
+  <div class="lead">
+    <h1>تعلّم رياضتك بالمهارة</h1>
+    <p class="sub">اختار الرياضة، وبعدين نوع المهارة ومستواك. كل مهارة بتفتح فيديوهات الشرح على يوتيوب.</p>
+  </div>
+  <div class="filters">
+    <div class="frow"><span class="flabel">الرياضة</span><div class="chips" id="s-cat"></div></div>
+    <div class="frow" id="s-specrow"><span class="flabel">النوع</span><div class="chips" id="s-spec"></div></div>
+    <div class="frow"><span class="flabel">المستوى</span><div class="chips" id="s-lv"></div></div>
+  </div>
+  <p class="count" id="s-count" aria-live="polite"></p>
+  <div class="grid" id="s-list"></div>
+  <aside class="tips">
+    <h2>قبل ما تبدأ</h2>
+    <ul>
+      <li>سخّن 5 إلى 10 دقايق قبل أي تمرين، وخد وقتك في الإطالة بعده.</li>
+      <li>اتعلم الحركة ببطء وبشكل صحيح الأول، وبعدين زوّد السرعة.</li>
+      <li>اختار فيديو مدرّب أو لاعب بيشرح الحركة من أكتر من زاوية وبيقول الأخطاء الشائعة.</li>
+      <li>لو حسيت بألم حاد، وقّف وكلّم مدرب أو دكتور.</li>
+    </ul>
+  </aside>
+</section>
+
+</div>
+</main>
+
+<footer><div class="in">روابط الكورسات والرياضة بتفتح نتائج بحث يوتيوب، وروابط المدرسين بتفتح شرح المادة عند المدرس. اختيار الشرح المناسب ليك بيرجع لك.<br>© وجهة. جميع الحقوق محفوظة، ويمنع نسخ الموقع أو إعادة نشره.</div></footer>
+</div>
+
+<script src="videos.js"></script>
+<script>
+(function(){
+var LV={kids:'للأطفال',beg:'مبتدئ',mid:'متوسط',adv:'متقدم'};
+var LVN={beg:1,mid:2,adv:3};
+var ARROW='<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" d="M7 17L17 7M9 7h8v8"/></svg>';
+function yt(q,pl){return 'https://www.youtube.com/results?search_query='+encodeURIComponent(q)+(pl?'&sp=EgIQAw%253D%253D':'');}
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+
+/* ---------- shared chip helper ---------- */
+function chip(g,k,label,on,fn){
+  var b=document.createElement('button');
+  b.type='button';b.className='chip';b.textContent=label;
+  b.setAttribute('aria-pressed',on?'true':'false');
+  b.dataset.g=g;b.dataset.k=k;b.onclick=fn;
+  return b;
+}
+function keepFocus(root,af){
+  if(!af||!af.dataset||!af.dataset.g)return;
+  var n=root.querySelector('[data-g="'+af.dataset.g+'"][data-k="'+af.dataset.k+'"]');
+  if(n)n.focus();
+}
+
+/* ---------- guide: conversation + catalogs ---------- */
+var STAGES=[['prep','في تالتة إعدادي (أو أقل)'],['sec1','في أولى ثانوي'],['sec2','في تانية ثانوي'],['sec3','في تالتة ثانوي'],['grad','خلصت الثانوية / في الجامعة']];
+var STAGE_SAY={
+  prep:'تمام. في تالتة إعدادي بتختار بين ثانوي عام وفني، وبعدها في الثانوي العام بتتحدد الشعبة أو المسار. الأول هسألك هتدخل أنهي نظام، وبعدها أسئلة قصيرة وأطلعلك الشعب الأنسب من النظام اللي اخترته.',
+  sec1:'تمام. أولى ثانوي سنة مشتركة، والقرار الكبير بييجي في تانية ثانوي (شعبة أو مسار). هسألك شوية أسئلة وأرشحلك الأنسب.',
+  sec2:'تمام. أنت دلوقتي في سنة التخصص، فهنعرف أنت في أنهي شعبة أو مسار، وبعدها نشوف الكليات الأنسب ليك وإيه اللي تركز عليه في تالتة.',
+  sec3:'تمام. دي السنة الحاسمة. هنحدد شعبتك ومجموعك المتوقع، وبعدين أرتبلك الكليات الأنسب مع بدائل أقل منافسة.',
+  grad:'تمام. هنشوف الأول وضعك إيه، وبعدها أرشحلك كلية أو مجال أو مهارة تبدأ بيها.'
+};
+var FAMN={S:'علمي علوم (أو مسار الطب وعلوم الحياة)',M:'علمي رياضة (أو مسار الهندسة وعلوم الحاسب)',L:'أدبي (أو مسار الآداب والفنون)',B:'مسار الأعمال (بكالوريا)'};
+var FAM={
+  S:{n:'الطب وعلوم الحياة',gen:'علمي علوم',ids:['gS','bS'],hs:'أحياء وكيمياء وفيزياء'},
+  M:{n:'الهندسة وعلوم الحاسب',gen:'علمي رياضة',ids:['gM','bM'],hs:'رياضيات وفيزياء وكيمياء'},
+  L:{n:'الآداب والفنون واللغات',gen:'أدبي',ids:['gL','bL'],hs:'تاريخ وجغرافيا وعربي ولغة أجنبية'},
+  B:{n:'الأعمال',gen:'',ids:['bB'],hs:'رياضيات واقتصاد ومحاسبة أو إدارة أعمال'}
+};
+var COMPL={vhigh:'منافسة عالية جدًا عادةً',high:'منافسة عالية',mid:'منافسة متوسطة'};
+var NO_TEST='مفيش اختبار قدرات معروف، لكن راجع شروط الجامعة اللي هتقدم فيها.';
+
+/* colleges: t = tag weights, e = streams that can usually apply (S M L B), c = competition */
+var COL=[
+ {id:'med',n:'الطب البشري',t:{med:3,sci:1},e:'S',c:'vhigh',y:'6 سنين + سنة امتياز تقريبًا',
+  trk:'علمي علوم (أو مسار الطب وعلوم الحياة)',
+  st:['علوم أساسية: تشريح، فسيولوجيا، كيمياء حيوية، أنسجة وأجنة','علم الأمراض والأدوية والميكروبيولوجي','الإكلينيكي: باطنة، جراحة، أطفال، نساء وتوليد، عظام، عيون','سنة امتياز تدريب في المستشفيات'],
+  jb:['طبيب عام','أخصائي بعد الماجستير أو البورد','باحث أو أستاذ جامعي'],hs:'أحياء وكيمياء',
+  q:'الدراسة في كلية الطب البشري شرح المواد وسنين الدراسة'},
+ {id:'dent',n:'طب الأسنان',t:{med:3},e:'S',c:'vhigh',y:'5 سنين + سنة امتياز تقريبًا',
+  trk:'علمي علوم (أو مسار الطب وعلوم الحياة)',
+  st:['تشريح الفم والأسنان وفسيولوجيا','مواد حيوية وأشعة الأسنان','علاج الجذور والحشوات والتركيبات','جراحة الفم والتقويم وأمراض اللثة'],
+  jb:['عيادة خاصة','مستشفيات ومراكز أسنان','تخصص تقويم أو جراحة'],hs:'أحياء وكيمياء',
+  q:'الدراسة في كلية طب الأسنان شرح المواد'},
+ {id:'pharm',n:'الصيدلة',t:{med:2,sci:2},e:'S',c:'vhigh',y:'5 سنين تقريبًا (وبرامج بتزيد سنة تدريب)',
+  trk:'علمي علوم (أو مسار الطب وعلوم الحياة)',
+  st:['كيمياء صيدلية وكيمياء عضوية','علم الأدوية والسموم','صيدلانيات وتصنيع الدواء','عقاقير وتحاليل وصيدلة إكلينيكية'],
+  jb:['صيدلية','مصانع أدوية وجودة','مستشفيات وصيدلة إكلينيكية','تسويق دوائي'],hs:'كيمياء وأحياء',
+  q:'الدراسة في كلية الصيدلة شرح المواد وفرص الشغل'},
+ {id:'vet',n:'الطب البيطري',t:{med:2,sci:2},e:'S',c:'mid',y:'5 سنين تقريبًا',
+  trk:'علمي علوم',
+  st:['تشريح وفسيولوجيا الحيوان','أمراض الحيوان والطفيليات','جراحة وولادة الحيوان','رقابة صحية على اللحوم والألبان'],
+  jb:['عيادة بيطرية','مزارع إنتاج حيواني ودواجن','مصانع أغذية ورقابة','مؤسسات حكومية'],hs:'أحياء وكيمياء',
+  q:'الدراسة في كلية الطب البيطري شرح'},
+ {id:'pt',n:'العلاج الطبيعي',t:{med:3},e:'S',c:'high',y:'4 سنين + سنة امتياز تقريبًا',
+  trk:'علمي علوم',
+  st:['تشريح وفسيولوجيا الحركة','علاج بالتمارين والأجهزة','تأهيل العظام والأعصاب والقلب','علاج طبيعي للأطفال والرياضيين'],
+  jb:['مراكز علاج طبيعي وتأهيل','أندية ومنتخبات رياضية','مستشفيات'],hs:'أحياء وفيزياء',
+  q:'الدراسة في كلية العلاج الطبيعي شرح المواد'},
+ {id:'nurs',n:'التمريض',t:{med:2,edu:1},e:'S',c:'mid',y:'4 سنين تقريبًا',
+  trk:'علمي علوم',
+  st:['أساسيات التمريض وتشريح','تمريض باطني وجراحي','تمريض أطفال ونساء وتوليد','صحة المجتمع وإدارة التمريض'],
+  jb:['مستشفيات ومراكز طبية','رعاية منزلية','فرص سفر كبيرة'],hs:'أحياء وكيمياء',
+  q:'الدراسة في كلية التمريض شرح'},
+ {id:'hsci',n:'العلوم الصحية التطبيقية (تحاليل وأشعة)',t:{med:2,sci:2},e:'S',c:'mid',y:'تختلف حسب الجامعة والبرنامج',
+  trk:'علمي علوم',
+  st:['تحاليل طبية وكيمياء حيوية','أشعة وتصوير طبي','أجهزة طبية','مختبرات الدم والأحياء الدقيقة'],
+  jb:['معامل تحاليل','مراكز أشعة','مستشفيات'],hs:'أحياء وكيمياء',
+  q:'العلوم الصحية التطبيقية تحاليل طبية وأشعة الدراسة والشغل'},
+ {id:'eng',n:'الهندسة',t:{eng:3,arts:1,cs:1},e:'M',c:'vhigh',y:'5 سنين تقريبًا (سنة إعدادي + 4 سنين تخصص)',
+  trk:'علمي رياضة (أو مسار الهندسة وعلوم الحاسب). بعض الأقسام والجامعات بتقبل علمي علوم، راجع تنسيق السنة.',
+  st:['سنة إعدادي: رياضيات، فيزياء، ميكانيكا، رسم هندسي، برمجة','أقسام: مدني، ميكانيكا، كهرباء (قوى واتصالات وحاسبات)، عمارة، كيمياء وبترول وغيرها','مشاريع تخرج وتدريب صيفي'],
+  jb:['مهندس موقع أو تصميم','شركات تشييد وبترول وكهرباء','تصنيع وصيانة','إدارة مشاريع'],hs:'رياضيات وفيزياء',
+  q:'الدراسة في كلية الهندسة الأقسام والمواد'},
+ {id:'arch',n:'هندسة العمارة',t:{arts:3,eng:2},e:'M',c:'high',y:'5 سنين تقريبًا',
+  trk:'علمي رياضة، وغالبًا باختبار قدرات (رسم وتصميم).',
+  st:['تصميم معماري ورسم يدوي وبرامج تصميم','تاريخ العمارة والتخطيط العمراني','إنشاءات وتكنولوجيا البناء','تنسيق مواقع وتصميم داخلي'],
+  jb:['مكاتب استشارات معمارية','شركات تطوير عقاري','تخطيط عمراني','تصميم داخلي'],hs:'رياضيات وفيزياء ومهارة رسم',
+  q:'اختبار القدرات هندسة العمارة وإزاي تتجهز'},
+ {id:'cs',n:'الحاسبات والذكاء الاصطناعي',t:{cs:3,eng:1},e:'MS',c:'vhigh',y:'4 سنين تقريبًا',
+  trk:'علمي رياضة، وفي سنين كتير علمي علوم كمان (راجع تنسيق السنة).',
+  st:['برمجة وهياكل بيانات وخوارزميات','قواعد بيانات وشبكات ونظم تشغيل','ذكاء اصطناعي وتعلم آلة','أمن سيبراني وهندسة برمجيات (حسب القسم)'],
+  jb:['مطور برمجيات ومواقع وتطبيقات','محلل بيانات','مهندس ذكاء اصطناعي أو أمن سيبراني','شغل عن بعد لشركات بره'],hs:'رياضيات',
+  q:'الدراسة في كلية الحاسبات والذكاء الاصطناعي الأقسام'},
+ {id:'sci',n:'العلوم',t:{sci:3,cs:1},e:'SM',c:'mid',y:'4 سنين تقريبًا',
+  trk:'علمي علوم أو رياضة حسب القسم.',
+  st:['أقسام: رياضيات، فيزياء، كيمياء، أحياء وميكروبيولوجي، جيولوجيا، وعلوم حاسب في بعض الجامعات','معامل وتجارب كتير','أبحاث ودراسات عليا'],
+  jb:['باحث في معمل أو جامعة','تحاليل وجودة في مصانع','تدريس','تكميل دراسة عليا'],hs:'حسب القسم: كيمياء أو فيزياء أو رياضيات أو أحياء',
+  q:'الدراسة في كلية العلوم الأقسام وفرص الشغل'},
+ {id:'agri',n:'الزراعة',t:{sci:2},e:'SM',c:'mid',y:'4 سنين تقريبًا',
+  trk:'علمي علوم أو رياضة.',
+  st:['إنتاج نباتي وحيواني','أراضي ومياه ووقاية نبات','صناعات غذائية','اقتصاد زراعي وبساتين'],
+  jb:['مزارع ومشاريع زراعية','مصانع أغذية','شركات أسمدة ومبيدات','مشاريع خاصة'],hs:'أحياء وكيمياء',
+  q:'الدراسة في كلية الزراعة الأقسام وفرص الشغل'},
+ {id:'comm',n:'التجارة',t:{biz:3},e:'SMLB',c:'mid',y:'4 سنين تقريبًا',
+  trk:'كل الشعب (علمي وأدبي)، ومسار الأعمال في البكالوريا.',
+  st:['محاسبة وتكاليف','إدارة أعمال وتسويق','اقتصاد وإحصاء','تمويل وبنوك وقانون تجاري'],
+  jb:['محاسب أو مراجع','موظف بنوك وشركات','مشاريع خاصة وتسويق','إدارة موارد بشرية'],hs:'رياضيات ومحاسبة وإدارة أعمال واقتصاد',
+  q:'الدراسة في كلية التجارة الأقسام وفرص الشغل'},
+ {id:'econ',n:'الاقتصاد والعلوم السياسية',t:{biz:2,law:2},e:'SMLB',c:'high',y:'4 سنين تقريبًا',
+  trk:'كل الشعب، ومسار الأعمال في البكالوريا.',
+  st:['اقتصاد جزئي وكلي','علوم سياسية وعلاقات دولية','إحصاء وطرق بحث','نظم سياسية ومقارنة'],
+  jb:['محلل اقتصادي','وزارات ومؤسسات دولية','سلك دبلوماسي (باختبارات)','بحث وصحافة اقتصادية'],hs:'تاريخ وجغرافيا ولغة أجنبية قوية',
+  q:'الدراسة في كلية الاقتصاد والعلوم السياسية'},
+ {id:'law',n:'الحقوق',t:{law:3,lang:1},e:'SMLB',c:'high',y:'4 سنين تقريبًا',
+  trk:'كل الشعب.',
+  st:['قانون مدني وجنائي ودستوري','قانون تجاري ومرافعات','قانون دولي وإداري','شريعة إسلامية وتاريخ القانون'],
+  jb:['محاماة','نيابة وقضاء (بشروط وتعيين)','مستشار قانوني في شركات','عمل في المؤسسات'],hs:'عربي وتاريخ وتفكير منطقي',
+  q:'الدراسة في كلية الحقوق المواد وفرص الشغل'},
+ {id:'arts',n:'الآداب',t:{lang:2,media:1,edu:1,law:1},e:'SMLB',c:'mid',y:'4 سنين تقريبًا',
+  trk:'أدبي أساسًا، وبعض الأقسام بتقبل علمي. راجع الجامعة.',
+  st:['أقسام: لغة عربية، لغة إنجليزية، تاريخ، جغرافيا، فلسفة، علم نفس، اجتماع، مكتبات','قراءة وبحث وكتابة كتير'],
+  jb:['تدريس وبحث','صحافة ومحتوى','مكتبات ومتاحف','أخصائي نفسي أو اجتماعي (حسب القسم)'],hs:'عربي وتاريخ وجغرافيا',
+  q:'الدراسة في كلية الآداب الأقسام وفرص الشغل'},
+ {id:'media',n:'الإعلام',t:{media:3,lang:1},e:'SMLB',c:'high',y:'4 سنين تقريبًا',
+  trk:'كل الشعب، وبعض الجامعات بتضيف اختبارات.',
+  st:['صحافة وتحرير','إذاعة وتلفزيون وإنتاج','علاقات عامة وإعلان','إعلام رقمي ومهارات كتابة'],
+  jb:['صحفي أو مراسل','منتج ومقدم محتوى','علاقات عامة وتسويق','صانع محتوى رقمي'],hs:'عربي ولغة أجنبية قوية',
+  q:'الدراسة في كلية الإعلام الأقسام وفرص الشغل'},
+ {id:'alsun',n:'الألسن واللغات',t:{lang:3,media:1},e:'SMLB',c:'high',y:'4 سنين تقريبًا',
+  trk:'أدبي أساسًا، وراجع شروط كل قسم وكل جامعة.',
+  st:['لغة اتنين من (إنجليزي، فرنساوي، ألماني، إسباني، إيطالي، صيني وغيرها)','ترجمة فورية وتحريرية','أدب ولغويات'],
+  jb:['مترجم','سياحة وسفارات','شركات متعددة الجنسيات','تدريس لغات'],hs:'لغة أجنبية قوية وعربي',
+  q:'الدراسة في كلية الألسن اللغات والأقسام'},
+ {id:'dar',n:'دار العلوم',t:{lang:2,edu:1},e:'LB',c:'mid',y:'4 سنين تقريبًا',
+  trk:'أدبي أساسًا.',
+  st:['نحو وصرف وبلاغة وأدب','شريعة وفقه','فلسفة إسلامية ودراسات لغوية'],
+  jb:['تدريس','بحث وتحقيق تراث','مجالات الدعوة والإعلام'],hs:'عربي ودين',
+  q:'الدراسة في كلية دار العلوم'},
+ {id:'fine',n:'الفنون الجميلة',t:{arts:3},e:'SMLB',c:'mid',y:'4 إلى 5 سنين حسب القسم والجامعة',
+  trk:'أي شعبة، لكن بعد نجاحك في اختبار القدرات.',test:'اختبار قدرات (رسم وتكوين وتذوق). التجهيز له مهم جدًا.',
+  st:['تصوير ونحت وجرافيك','ديكور وعمارة (حسب الجامعة)','تاريخ الفن وتشريح ومنظور'],
+  jb:['فنان وتشكيلي','مصمم ومخرج فني','رسوم متحركة','تعليم فني'],hs:'مهارة رسم قوية',
+  q:'اختبار القدرات الفنون الجميلة إزاي تتجهز'},
+ {id:'appl',n:'الفنون التطبيقية',t:{arts:3,eng:1},e:'SMLB',c:'mid',y:'4 سنين تقريبًا',
+  trk:'أي شعبة، بعد اختبار القدرات.',test:'اختبار قدرات (رسم وتصميم).',
+  st:['تصميم جرافيك وإعلان','تصميم داخلي وأثاث','منسوجات وأزياء','تصوير وطباعة ونشر'],
+  jb:['مصمم جرافيك','مصمم داخلي','تصميم أزياء','تسويق بصري'],hs:'مهارة رسم وتصميم',
+  q:'اختبار القدرات الفنون التطبيقية والأقسام'},
+ {id:'edu',n:'التربية (معلم)',t:{edu:3,lang:1},e:'SMLB',c:'mid',y:'4 سنين تقريبًا',
+  trk:'حسب المادة اللي هتدرّسها: علمي أو أدبي.',
+  st:['مادة التخصص (مثلًا رياضيات أو عربي أو علوم)','علم نفس تربوي وطرق تدريس','تدريب ميداني في المدارس'],
+  jb:['مدرس في مدارس حكومية أو خاصة','مدرس في مراكز أو أونلاين','إدارة تعليمية'],hs:'مادة التخصص اللي بتحبها',
+  q:'الدراسة في كلية التربية الأقسام وفرص الشغل'},
+ {id:'pe',n:'التربية الرياضية',t:{edu:2},e:'SMLB',c:'mid',y:'4 سنين تقريبًا',
+  trk:'أي شعبة، بعد اختبارات بدنية ومهارية.',test:'اختبارات قدرات بدنية ومهارية.',
+  st:['علوم الحركة وفسيولوجيا الرياضة','تدريب رياضي وألعاب','تربية رياضية وصحية'],
+  jb:['مدرس تربية رياضية','مدرب في نادي','لياقة وتأهيل'],hs:'لياقة بدنية وأحياء',
+  q:'اختبارات القدرات كلية التربية الرياضية'},
+ {id:'tour',n:'السياحة والفنادق',t:{biz:2,lang:1},e:'SMLB',c:'mid',y:'4 سنين تقريبًا',
+  trk:'كل الشعب.',
+  st:['إدارة فنادق وضيافة','إرشاد سياحي وآثار','لغات وسياحة'],
+  jb:['فنادق ومنتجعات','شركات سياحة','إرشاد سياحي'],hs:'لغة أجنبية قوية',
+  q:'الدراسة في كلية السياحة والفنادق'}
+];
+
+var TRACKS=[
+ {id:'g0',sys:'gen',n:'أولى ثانوي (مشتركة)',d:'السنة الأولى بتكون واحدة لكل الطلاب، وبعدها بتتحدد الشعبة.',
+  yr:[['أولى ثانوي','عربي · لغة أجنبية أولى · تاريخ · رياضيات · علوم متكاملة · فلسفة ومنطق','كل مادة 100 درجة (المجموع 600)']]},
+ {id:'gS',sys:'gen',n:'علمي علوم',d:'الطريق للطب والصيدلة والعلوم الصحية، وكمان بيفتح علوم وزراعة وتجارة وغيرها.',
+  yr:[['تانية ثانوي (علمي)','عربي (80) · لغة أجنبية أولى (60) · رياضيات (60) · تاريخ (60) · كيمياء (60) · فيزياء (60)','المجموع 380'],
+      ['تالتة ثانوي','عربي (80) · لغة أجنبية أولى (60) · أحياء (60) · كيمياء (60) · فيزياء (60)','المجموع 320']]},
+ {id:'gM',sys:'gen',n:'علمي رياضة',d:'الطريق للهندسة والحاسبات والذكاء الاصطناعي.',
+  yr:[['تانية ثانوي (علمي)','عربي (80) · لغة أجنبية أولى (60) · رياضيات (60) · تاريخ (60) · كيمياء (60) · فيزياء (60)','المجموع 380'],
+      ['تالتة ثانوي','عربي (80) · لغة أجنبية أولى (60) · رياضيات (60) · كيمياء (60) · فيزياء (60)','المجموع 320']]},
+ {id:'gL',sys:'gen',n:'أدبي',d:'الطريق للحقوق والإعلام والآداب والألسن والتجارة وغيرها.',
+  yr:[['تانية ثانوي','عربي (80) · لغة أجنبية أولى (60) · تاريخ (60) · جغرافيا (60) · علم نفس (60) · رياضيات (60)','المجموع 380'],
+      ['تالتة ثانوي','عربي (80) · لغة أجنبية أولى (60) · تاريخ (60) · جغرافيا (60) · إحصاء (60)','المجموع 320']]},
+ {id:'bS',sys:'bk',n:'البكالوريا: الطب وعلوم الحياة',d:'المسار الأقرب لكليات الطب والصيدلة والعلوم الصحية.',
+  yr:[['تانية ثانوي','عربي · لغة أجنبية أولى · تاريخ · مادة تخصصية واحدة تختارها: رياضيات أو فيزياء','الثقافة المالية والتربية الرياضية مش بتتضاف للمجموع'],
+      ['تالتة ثانوي','أحياء (مستوى متقدم) · كيمياء (مستوى متقدم)','التربية الدينية نجاح ورسوب (70% على الأقل)']]},
+ {id:'bM',sys:'bk',n:'البكالوريا: الهندسة وعلوم الحاسب',d:'المسار الأقرب للهندسة والحاسبات والذكاء الاصطناعي.',
+  yr:[['تانية ثانوي','عربي · لغة أجنبية أولى · تاريخ · مادة تخصصية واحدة: كيمياء أو البرمجة والذكاء الاصطناعي','الثقافة المالية والتربية الرياضية مش بتتضاف للمجموع'],
+      ['تالتة ثانوي','رياضيات (مستوى متقدم) · فيزياء (مستوى متقدم)','التربية الدينية نجاح ورسوب (70% على الأقل)']]},
+ {id:'bB',sys:'bk',n:'البكالوريا: الأعمال',d:'مسار جديد للتجارة والاقتصاد وإدارة الأعمال.',
+  yr:[['تانية ثانوي','عربي · لغة أجنبية أولى · تاريخ · مادة تخصصية واحدة: محاسبة أو إدارة أعمال','الثقافة المالية والتربية الرياضية مش بتتضاف للمجموع'],
+      ['تالتة ثانوي','اقتصاد (مستوى متقدم) · رياضيات','التربية الدينية نجاح ورسوب (70% على الأقل)']]},
+ {id:'bL',sys:'bk',n:'البكالوريا: الآداب والفنون',d:'مسار للغات والآداب والإعلام والقانون والعلوم الإنسانية.',
+  yr:[['تانية ثانوي','عربي · لغة أجنبية أولى · تاريخ · مادة تخصصية واحدة: علم نفس أو لغة أجنبية تانية','الثقافة المالية والتربية الرياضية مش بتتضاف للمجموع'],
+      ['تالتة ثانوي','جغرافيا (مستوى متقدم) · إحصاء','التربية الدينية نجاح ورسوب (70% على الأقل)']]}
+];
+var TRK_BY={};TRACKS.forEach(function(t){TRK_BY[t.id]=t;});
+var COL_BY={};COL.forEach(function(c){COL_BY[c.id]=c;});
+
+/* questions: 20-question points system (MED / ENG / BUS / ART + BK / GEN) */
+var QS={};
+(function(){
+  var S1='القسم الأول: اكتشاف الميول والتخصص',S2='القسم الثاني: اختيار نظام الثانوية',S3='القسم الثالث: تقييم قدراتك الدراسية';
+  function four(id,q,pts,L,sec){
+    var K=['MED','ENG','BUS','ART'];
+    QS[id]={id:id,q:q,sec:sec,o:L.map(function(l,i){var w={};w[K[i]]=pts;return {k:K[i],l:l,w:w};})};
+  }
+  function custom(id,q,opts,sec){QS[id]={id:id,q:q,sec:sec,o:opts.map(function(o,i){return {k:'o'+i,l:o[0],w:o[1]};})};}
+  four('q1','أي مادة تستمتع بدراستها أكثر؟',3,['الأحياء والكيمياء','الرياضيات والفيزياء','الاقتصاد والتجارة','اللغات والتاريخ والجغرافيا'],S1);
+  four('q2','لو عندك مشروع مدرسي، تختار تعمل إيه؟',3,['أبحث في جسم الإنسان والأمراض','أصمم برنامج أو جهاز','أعمل مشروع تجاري','أعمل بحث تاريخي أو عمل إبداعي']);
+  four('q3','أي نوع من المشكلات تحب تحلها؟',2,['مشكلات صحية وعلمية','مشكلات تقنية ورياضية','مشكلات مالية وإدارية','مشكلات اجتماعية وثقافية']);
+  four('q4','إيه أكثر شيء يحمسك في المستقبل؟',3,['مساعدة المرضى وتطوير الطب','اختراع التكنولوجيا وتطويرها','تأسيس شركة وإدارتها','الكتابة والإعلام والفنون']);
+  four('q5','أي نوع من المحتوى تفضل مشاهدته؟',2,['محتوى طبي وعلمي','برمجة وتكنولوجيا وذكاء اصطناعي','استثمار وتسويق وإدارة','تاريخ ولغات وفنون']);
+  four('q6','لو طلب منك تتعلم مهارة جديدة، تختار؟',2,['فهم جسم الإنسان والتحاليل','البرمجة وصناعة التطبيقات','التسويق وإدارة الأموال','تعلم لغة أو التصميم والكتابة']);
+  four('q7','أي بيئة عمل تفضل؟',2,['مستشفى أو مركز أبحاث','شركة تكنولوجيا أو مكتب هندسي','شركة أو مؤسسة تجارية','مؤسسة إعلامية أو ثقافية أو فنية']);
+  four('q8','أي نوع من الدراسة يناسبك؟',2,['فهم الكائنات الحية والتجارب العلمية','حل المسائل والتفكير المنطقي','التحليل والتخطيط واتخاذ القرارات','القراءة والتحليل والتعبير']);
+  four('q9','لو هتختار مسابقة تشارك فيها، تختار؟',2,['مسابقة علوم وأحياء','مسابقة روبوتات وبرمجة','مسابقة ريادة أعمال','مسابقة كتابة أو لغات أو فنون']);
+  four('q10','ما نوع الكتب التي تفضلها؟',2,['الطب والعلوم','التكنولوجيا والرياضيات','الإدارة والاقتصاد','الأدب والتاريخ والفلسفة']);
+  four('q11','لو واجهت موضوعًا صعبًا، ما الطريقة التي تفضلها؟',2,['أفهمه من خلال أمثلة علمية وتجارب','أحل عليه مسائل وأطبق بنفسي','أربطه بمواقف عملية وواقعية','أقرأ عنه وأحلله وأناقشه']);
+  four('q12','ما المجال الذي تتخيل نفسك تتطور فيه باستمرار؟',3,['الطب والعلوم الحيوية','الهندسة والبرمجة','المال والإدارة والأعمال','اللغات والعلوم الإنسانية والفنون']);
+  custom('q13','ما رأيك في وجود أكثر من فرصة امتحانية لتحسين الدرجات؟',[['أفضل وجود فرص متعددة',{BK:3}],['أفضل نظامًا أبسط بفرصة امتحانية أساسية',{GEN:3}],['لا يفرق معي',{}]],S2);
+  custom('q14','أي نظام دراسة تفضله؟',[['نظام قائم على اختيار مسار تخصصي مبكرًا',{BK:3}],['أفضل تأجيل التخصص لحين وضوح اختياراتي',{GEN:3}],['لا أعرف',{}]]);
+  custom('q15','ما مدى تقبلك لتغيير مسارك الدراسي إذا اكتشفت أن اختيارك غير مناسب؟',[['أريد نظامًا يوفر مرونة في تغيير المسار وفق ضوابطه',{BK:3}],['أفضل الاستمرار في مسار تقليدي واضح',{GEN:3}],['لا أعرف',{}]]);
+  custom('q16','أي وصف يناسبك أكثر؟',[['أحب أن أتحمل مسؤولية تنظيم محاولاتي وامتحاناتي',{BK:2}],['أفضل نظامًا تقليديًا واضحًا ومحددًا',{GEN:2}],['كلاهما مناسب',{}]]);
+  custom('q17','مستواك في الرياضيات؟',[['ممتاز',{ENG:2,BUS:1}],['جيد جدًا',{ENG:1,BUS:1}],['متوسط',{}],['ضعيف',{}]],S3);
+  custom('q18','مستواك في العلوم (علوم عامة وخصوصًا الأحياء والكيمياء)؟',[['ممتاز',{MED:2}],['جيد جدًا',{MED:1}],['متوسط',{}],['ضعيف',{}]]);
+  custom('q19','مستواك في اللغة العربية والإنجليزية والمواد الأدبية؟',[['ممتاز',{ART:2}],['جيد جدًا',{ART:1}],['متوسط',{}],['ضعيف',{}]]);
+  custom('q20','كيف تصف طريقة مذاكرتك؟',[['أحب الفهم والتطبيق وحل المسائل',{ENG:1,MED:1}],['أحب الحفظ والفهم معًا',{MED:1,ART:1}],['أحب التحليل والتنظيم وربط المعلومات',{BUS:1,ART:1}],['أحب القراءة والكتابة والتعبير',{ART:2}]]);
+})();
+STAGE_SAY={
+  prep:'تمام. هسألك 20 سؤال في 3 أقسام: ميولك، وبعدها النظام اللي يناسبك (ثانوي عام ولا بكالوريا)، وبعدها مستواك الدراسي. بعدها أطلعلك المسار الأنسب والنظام والكليات.',
+  sec1:'تمام. هسألك 20 سؤال في 3 أقسام: ميولك، والنظام اللي يناسبك، ومستواك الدراسي. بعدها أطلعلك المسار الأنسب لتانية ثانوي والكليات اللي بيوصّل لها.',
+  sec2:'تمام. هسألك 16 سؤال عن ميولك ومستواك (مفيش قسم اختيار النظام لأنك داخل في نظام فعلًا). بعدها أطلعلك المسار الأنسب والكليات.',
+  sec3:'تمام. هسألك 16 سؤال عن ميولك ومستواك. بعدها أطلعلك المسار الأنسب والكليات اللي بيوصّل لها.',
+  grad:'تمام. هسألك 16 سؤال عن ميولك ومستواك، وبعدها أطلعلك المجال والكليات الأقرب ليك.'
+};
+function flowFor(G){
+  if(!G.stage)return [];
+  var f=[];for(var i=1;i<=20;i++)f.push('q'+i);
+  if(G.stage!=='prep'&&G.stage!=='sec1')f=f.filter(function(q){return ['q13','q14','q15','q16'].indexOf(q)<0;});
+  return f;
+}
+function leadOf(){return null;}
+function optOf(G,qid){var q=QS[qid];var k=G.ans[qid];for(var i=0;i<q.o.length;i++)if(q.o[i].k===k)return q.o[i];return null;}
+function tagScores(G){
+  var s={};
+  Object.keys(G.ans).forEach(function(qid){
+    var o=optOf(G,qid);if(!o)return;
+    for(var t in o.w)s[t]=(s[t]||0)+o.w[t];
+  });
+  return s;
+}
+/* detail renderers */
+function ulHtml(a){return '<ul class="dul">'+a.map(function(x){return '<li>'+esc(x)+'</li>';}).join('')+'</ul>';}
+function tagsHtml(a){return '<div class="tags">'+a.map(function(x){return '<span class="tag">'+esc(x)+'</span>';}).join('')+'</div>';}
+function colBody(c,trk){
+  var rows='<dt>الشعبة المطلوبة</dt><dd>'+esc(c.trk);
+  if(trk){rows+=c.e.indexOf(trk)>-1?' <span class="tag ok">مناسبة لشعبتك</span>':' <span class="tag warn">مش متاحة لشعبتك غالبًا</span>';}
+  rows+='</dd>';
+  rows+='<dt>مدة الدراسة</dt><dd>'+esc(c.y)+'</dd>';
+  rows+='<dt>هتدرس إيه</dt><dd>'+ulHtml(c.st)+'</dd>';
+  rows+='<dt>هتشتغل إيه</dt><dd>'+tagsHtml(c.jb)+'</dd>';
+  rows+='<dt>اختبار قدرات</dt><dd>'+esc(c.test||NO_TEST)+'</dd>';
+  rows+='<dt>المنافسة</dt><dd>'+COMPL[c.c]+'، والأرقام الفعلية بتتغير كل سنة حسب التنسيق.</dd>';
+  rows+='<dt>مواد مفيدة في الثانوي</dt><dd>'+esc(c.hs)+'</dd>';
+  return '<dl>'+rows+'</dl><a class="go" href="'+yt(c.q,false)+'" target="_blank" rel="noopener noreferrer">شوف شرح الدراسة والشغل على يوتيوب '+ARROW+'</a>';
+}
+function trackBody(t){
+  return '<dl>'+t.yr.map(function(y){
+    return '<dt>'+esc(y[0])+'</dt><dd>'+esc(y[1])+'<span class="sm">'+esc(y[2])+'</span></dd>';
+  }).join('')+'</dl>';
+}
+
+/* comparison: general secondary vs baccalaureate */
+function cmpHtml(){
+  var R=[
+   ['عدد الشعب','3 شعب: علمي علوم، علمي رياضة، أدبي.','4 مسارات: الطب وعلوم الحياة، الهندسة وعلوم الحاسب، الأعمال، الآداب والفنون.'],
+   ['أولى ثانوي','سنة مشتركة لكل الطلاب: عربي، لغة أجنبية أولى، تاريخ، رياضيات، علوم متكاملة، فلسفة ومنطق (100 درجة لكل مادة، المجموع 600).','سنة تمهيدية مش داخلة في المجموع النهائي حسب بعض المصادر، ومصادر تانية بتذكرها بنفس مواد الثانوي العام. اسأل مدرستك.'],
+   ['تانية ثانوي','شعبة علمي واحدة (عربي 80، أجنبية أولى 60، رياضيات 60، تاريخ 60، كيمياء 60، فيزياء 60) أو أدبي. المجموع 380.','بتبدأ سنة البكالوريا الفعلية وبتختار مسارك. مواد إجبارية (عربي، لغة أجنبية أولى، تاريخ) + مادة تخصصية واحدة من اتنين حسب المسار.'],
+   ['تالتة ثانوي','5 مواد، المجموع 320. علوم: أحياء وكيمياء وفيزياء. رياضة: رياضيات وكيمياء وفيزياء. أدبي: تاريخ وجغرافيا وإحصاء. وكلهم مع عربي ولغة أجنبية أولى.','مادتين تخصصيتين بمستوى متقدم حسب المسار (مثلًا الطب: أحياء وكيمياء، الهندسة: رياضيات وفيزياء).'],
+   ['متى بتتحدد وجهتك','علمي أو أدبي في تانية، وعلوم أو رياضة في تالتة.','المسار بيتحدد في تانية ثانوي.'],
+   ['تغيير الاختيار','المصادر اللي رجعتلها ما ذكرتش قواعد تغيير الشعبة، فاسأل مدرستك.','ممكن تغير المسار بعد دراسة أول مادة تخصصية.'],
+   ['مواد نجاح ورسوب','التربية الدينية، واللغة الأجنبية التانية، والتربية الوطنية.','التربية الدينية (لازم 70% على الأقل)، والثقافة المالية، ونشاط التربية الرياضية.'],
+   ['القبول في الجامعة','تنسيق بالمجموع.','تنسيق بالمجموع بالتعاون مع المجلس الأعلى للجامعات. الكليات اللي كل مسار بيوصّل لها لسه بتتحدد رسميًا.']
+  ];
+  return '<div class="cmp"><strong class="cmph">الفرق بين الثانوي العام والبكالوريا</strong>'
+    +'<div class="cmprow head"><span></span><span>الثانوي العام</span><span>البكالوريا</span></div>'
+    +R.map(function(r){
+      return '<div class="cmprow"><span class="cl">'+r[0]+'</span><span data-l="الثانوي العام">'+esc(r[1])+'</span><span data-l="البكالوريا">'+esc(r[2])+'</span></div>';
+    }).join('')
+    +'<p class="note">الأنظمة بتتعدل، فراجع إعلان وزارة التربية والتعليم. وده مش تفضيل لنظام على التاني، هو بس اختلاف في توقيت التخصص وعدد المواد.</p></div>';
+}
+
+/* ---------- conversation ---------- */
+var G={stage:null,ans:{},order:[]};
+var gTimer=null,gPending=false;
+function gReduce(){return window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;}
+function bub(cls,html){return '<div class="bub '+cls+'">'+html+'</div>';}
+
+/* results for the 20-question system */
+var TRK4={
+  MED:{n:'الطب وعلوم الحياة',gen:'علمي علوم',bk:'bS',gn:'gS',cols:['med','dent','pharm','pt','vet','nurs','hsci','sci'],hs:'أحياء وكيمياء وفيزياء'},
+  ENG:{n:'الهندسة وعلوم الحاسب',gen:'علمي رياضة',bk:'bM',gn:'gM',cols:['eng','cs','arch','sci'],hs:'رياضيات وفيزياء وكيمياء'},
+  BUS:{n:'الأعمال',gen:'',bk:'bB',gn:'',cols:['comm','econ','tour','law'],hs:'رياضيات واقتصاد ومحاسبة وإدارة أعمال'},
+  ART:{n:'الآداب والفنون',gen:'أدبي',bk:'bL',gn:'gL',cols:['law','arts','media','alsun','dar','fine','appl','edu','pe'],hs:'عربي ولغة أجنبية وتاريخ وجغرافيا'}
+};
+function maxPts(k){
+  var m=0;
+  Object.keys(G.ans).forEach(function(qid){
+    var best=0;QS[qid].o.forEach(function(o){if((o.w[k]||0)>best)best=o.w[k];});
+    m+=best;
+  });
+  return m;
+}
+function whyTrack(k){
+  var out=[];
+  Object.keys(G.ans).forEach(function(qid){
+    var o=optOf(G,qid);
+    if(o&&(o.w[k]||0)>0&&['q17','q18','q19','q20'].indexOf(qid)<0)out.push({v:o.w[k],l:o.l});
+  });
+  out.sort(function(a,b){return b.v-a.v;});
+  return out.slice(0,3);
+}
+function sysReasons(k){
+  var out=[];
+  ['q13','q14','q15','q16'].forEach(function(qid){
+    var o=optOf(G,qid);
+    if(o&&(o.w[k]||0)>0)out.push(o.l);
+  });
+  return out;
+}
+function quotes(a){return a.map(function(x){return '«'+esc(x)+'»';}).join('، ');}
+function resultHtml(){
+  var s=tagScores(G),order=['MED','ENG','BUS','ART'];
+  var rows=order.map(function(k,i){var mx=maxPts(k),v=s[k]||0;return {k:k,v:v,pct:mx?Math.round(v/mx*100):0,i:i};});
+  var sorted=rows.slice().sort(function(a,b){return b.v-a.v||a.i-b.i;});
+  if(!sorted[0].v)return '<div class="empty">إجاباتك مش كفاية أرشحلك مسار بثقة. جرّب تبدأ من الأول.</div>';
+  var early=(G.stage==='prep'||G.stage==='sec1');
+  var out='';
+  var tied=sorted.filter(function(r){return r.v===sorted[0].v;});
+  var sys='both';
+  if(early){
+    var bk=s.BK||0,gen=s.GEN||0;
+    sys=bk>gen?'bk':gen>bk?'gen':'both';
+    var head,why;
+    if(sys==='bk'){head='البكالوريا أنسب لتفضيلاتك';why=sysReasons('BK');}
+    else if(sys==='gen'){head='الثانوية العامة أنسب لتفضيلاتك';why=sysReasons('GEN');}
+    else{head='النظامين مناسبين ليك';why=[];}
+    out+='<article class="res first"><span class="rank">النظام الأنسب</span><h3>'+head+'</h3>'
+      +'<p class="why">نقطك: البكالوريا '+bk+'، الثانوية العامة '+gen+'.'+(why.length?' بسبب إجاباتك: '+quotes(why):(sys==='both'?' مفيش فرق واضح في إجاباتك، فاقرا الفرق بينهم وقرر.':''))+'</p>'
+      +'<details class="dcard"><summary><span class="sn">الفرق بين الثانوي العام والبكالوريا</span></summary><div class="cmpin">'+cmpHtml()+'</div></details></article>';
+  }
+  out+='<article class="res"><h3>ترتيب المسارات حسب نقطك</h3><div class="bars4">'
+    +sorted.map(function(r){return '<div class="b4"><span>'+esc(TRK4[r.k].n)+'</span><div class="bar"><i style="width:'+r.pct+'%"></i></div><strong>'+r.v+' نقطة</strong></div>';}).join('')
+    +'</div>'+(tied.length>1?'<p class="why">فيه تعادل بين '+tied.map(function(r){return esc(TRK4[r.k].n);}).join(' و ')+'، فاقرا تفاصيل الاتنين.</p>':'')+'</article>';
+  var ranks=['الأقرب ليك','قريب منك'];
+  sorted.slice(0,2).forEach(function(r,n){
+    if(!r.v)return;
+    var T=TRK4[r.k],w=whyTrack(r.k);
+    var tl=[];
+    if(early){
+      var ids=sys==='bk'?[T.bk]:sys==='gen'?(T.gn?[T.gn]:[]):[T.bk,T.gn].filter(Boolean);
+      ids.forEach(function(id){tl.push('<div class="trk"><strong>'+esc(TRK_BY[id].n)+'</strong>'+trackBody(TRK_BY[id])+'</div>');});
+      if(sys==='gen'&&!T.gn)tl.push('<p class="why">الثانوية العامة مفيهاش شعبة أعمال، وكليات التجارة بتقبل كل الشعب. وفي البكالوريا فيه مسار «الأعمال».</p>');
+    }
+    var cols=T.cols.map(function(id){return COL_BY[id];});
+    out+='<article class="res'+(n===0?' first':'')+'"><span class="rank">'+ranks[n]+'</span><h3>'+esc(T.n)+'</h3>'
+      +(w.length?'<p class="why">رشحناه بسبب إجاباتك: '+quotes(w.map(function(x){return x.l;}))+'</p>':'')
+      +'<dl><dt>في البكالوريا</dt><dd>مسار «'+esc(T.n)+'»</dd>'
+      +'<dt>في الثانوية العامة</dt><dd>'+esc(T.gen||'مفيش شعبة مقابلة، وكليات التجارة بتقبل كل الشعب')+'</dd>'
+      +'<dt>مواد لازم تقوّيها</dt><dd>'+esc(T.hs)+'</dd></dl>'
+      +(tl.length?'<div class="subh">المواد في كل سنة</div>'+tl.join(''):'')
+      +'<div class="subh">الكليات اللي بيوصّل لها</div><div class="dgrid1">'
+      +cols.map(function(c){return '<details class="dcard"><summary><span class="sn">'+esc(c.n)+'</span><span class="tag">'+COMPL[c.c]+'</span></summary>'+colBody(c,null)+'</details>';}).join('')
+      +'</div></article>';
+  });
+  var steps=[];
+  if(early)steps.push('الاختيار الرسمي للشعبة أو المسار بيتم في تانية ثانوي، فعندك وقت تتأكد.','ركز السنة دي على الرياضيات والعلوم واللغات، لأنها بتفتح كل الاحتمالات.','اسأل مدرستك عن النظام اللي هيتطبق عليك قبل ما تحسم، لأن الأنظمة بتتعدل.');
+  else if(G.stage==='sec2')steps.push('ركز في تالتة ثانوي على مواد المسار اللي اخترته.','لو مسارك الحالي غير المسار الأقرب ليك، اعرف شروط وتوقيت تغيير الشعبة أو المسار من مدرستك.');
+  else steps.push('رتّب رغباتك في التنسيق من الأعلى للأقل، وحط بدائل واقعية في الآخر.','راجع إعلان التنسيق الرسمي كل سنة، لأن الحد الأدنى والشروط بتتغير.');
+  steps.push('لو في كلية فيها اختبار قدرات، ابدأ تجهز ليه بدري.','كلّم حد شغال في المجال أو متخرج من الكلية قبل ما تحسم.');
+  out+='<article class="res"><h3>خطوتك الجاية</h3>'+ulHtml(steps)+'</article>';
+  return out;
+}
+function qBub(qid){var q=QS[qid];return (q.sec?bub('bot sechead','<span class="sechead">'+esc(q.sec)+'</span>'):'')+bub('bot',esc(q.q));}
+function drawGuide(){
+  var log=document.getElementById('g-log'),opts=document.getElementById('g-opts'),resBox=document.getElementById('g-res'),
+      prog=document.getElementById('g-prog'),pl=document.getElementById('g-plabel'),back=document.getElementById('g-back');
+  clearTimeout(gTimer);gPending=false;
+  var h='';
+  h+=bub('bot','أهلًا، أنا مرشد وجهة. هساعدك تختار شعبتك أو كليتك بخطوات واضحة. <strong>إنت في أنهي سنة؟</strong>');
+  var flow=[];
+  if(G.stage){
+    h+=bub('me',esc(STAGES.filter(function(x){return x[0]===G.stage;})[0][1]));
+    h+=bub('bot',esc(STAGE_SAY[G.stage]));
+    flow=flowFor(G);
+  }
+  var next=null;
+  flow.forEach(function(qid){
+    if(G.ans[qid]!==undefined){
+      h+=qBub(qid);
+      h+=bub('me',esc(optOf(G,qid).l));
+      if(qid==='sys'&&G.ans.sys==='both')h+=bub('bot wide',cmpHtml());
+    }else if(!next)next=qid;
+  });
+  var done=G.stage&&!next;
+  var total=flow.length+0,answered=flow.filter(function(q){return G.ans[q]!==undefined;}).length;
+  prog.style.width=(G.stage?Math.round(answered/total*100):0)+'%';
+  pl.textContent=G.stage?(done?'خلصنا':'سؤال '+(answered+1)+' من '+total):'ابدأ باختيار سنتك';
+  back.hidden=!G.stage;
+  resBox.innerHTML='';resBox.hidden=true;
+  opts.innerHTML='';
+  var showOpts=function(){
+    opts.innerHTML='';
+    if(!G.stage){
+      STAGES.forEach(function(s){opts.appendChild(optBtn(s[1],function(){G.stage=s[0];G.ans={};G.order=[];drawGuide(true);}));});
+    }else if(next){
+      var q=QS[next];
+      if(q.why)opts.appendChild(whyEl(q.why));
+      q.o.forEach(function(o){opts.appendChild(optBtn(o.l,function(){G.ans[next]=o.k;G.order.push(next);drawGuide(true);}));});
+    }
+  };
+  var finish=function(){
+    if(done){
+      log.innerHTML=h+bub('bot','خلصت أسئلتي. دي النتيجة بناءً على إجاباتك، ومعاها التفاصيل:');
+      resBox.innerHTML=resultHtml()+'<div class="rbtns"><button type="button" class="btn" id="g-again">ابدأ من الأول</button><button type="button" class="btn alt" id="g-tocol">افتح دليل الكليات</button></div>';
+      resBox.hidden=false;
+      document.getElementById('g-again').onclick=function(){G={stage:null,ans:{},order:[]};drawGuide();};
+      document.getElementById('g-tocol').onclick=function(){gTab('colleges');};
+    }else{
+      log.innerHTML=h+(next?qBub(next):'');
+      showOpts();
+    }
+    if(arguments[0]){var last=done?resBox:log.lastElementChild;if(last)last.scrollIntoView({behavior:'smooth',block:'nearest'});}
+  };
+  var animate=arguments[0]&&!gReduce();
+  if(animate){
+    log.innerHTML=h+'<div class="bub bot typing" aria-label="بيكتب"><i></i><i></i><i></i></div>';
+    gPending=true;
+    gTimer=setTimeout(function(){gPending=false;finish(true);},520);
+  }else{finish(false);}
+}
+function optBtn(label,fn){
+  var b=document.createElement('button');b.type='button';b.className='chip opt';b.textContent=label;b.onclick=fn;return b;
+}
+function whyEl(t){var p=document.createElement('p');p.className='hint wide';p.textContent=t;return p;}
+
+/* tabs, track guide, college guide */
+var gColFam='all',gColQ='';
+function drawTracks(){
+  var el=document.getElementById('g-p-tracks-body');
+  function sec(title,sub,sys){
+    return '<h2 class="gh">'+title+'</h2><p class="sub">'+sub+'</p><div class="dgrid">'
+      +TRACKS.filter(function(t){return t.sys===sys;}).map(function(t){
+        return '<article class="dcard"><h3>'+esc(t.n)+'</h3><p class="why">'+esc(t.d)+'</p>'+trackBody(t)+'</article>';
+      }).join('')+'</div>';
+  }
+  el.innerHTML='<div class="bub bot wide cmpbox">'+cmpHtml()+'</div>'+sec('الثانوية العامة','المواد ودرجاتها زي ما اتعلنت في توزيع الدرجات لعام 2025/2026.','gen')
+    +sec('البكالوريا المصرية','أربع مسارات، وبتبدأ فيها السنة الفعلية من تانية ثانوي. الطالب يقدر يغير المسار بعد دراسة المادة التخصصية الأولى.','bk');
+}
+function drawCols(){
+  var fb=document.getElementById('g-colfam');
+  var FL=[['all','كل الكليات'],['S','علمي علوم'],['M','علمي رياضة'],['L','أدبي'],['B','أعمال']];
+  fb.replaceChildren.apply(fb,FL.map(function(f){return chip('cf',f[0],f[1],gColFam===f[0],function(){gColFam=f[0];drawCols();});}));
+  var q=gColQ.trim();
+  var list=COL.filter(function(c){
+    return (gColFam==='all'||c.e.indexOf(gColFam)>-1)&&(!q||(c.n+' '+c.st.join(' ')+' '+c.jb.join(' ')).indexOf(q)>-1);
+  });
+  document.getElementById('g-colcount').textContent=list.length+' كلية';
+  document.getElementById('g-collist').innerHTML=list.length?list.map(function(c){
+    return '<details class="dcard"><summary><span class="sn">'+esc(c.n)+'</span><span class="tag">'+COMPL[c.c]+'</span></summary>'+colBody(c,gColFam==='all'?null:gColFam)+'</details>';
+  }).join(''):'<div class="empty">مفيش كلية بالاسم ده. جرّب كلمة تانية.</div>';
+}
+function gTab(id){
+  ['chat','tracks','colleges'].forEach(function(k){
+    document.getElementById('g-p-'+k).hidden=(k!==id);
+    document.getElementById('g-tab-'+k).setAttribute('aria-selected',k===id?'true':'false');
+  });
+}
+function mountGuide(){
+  ['chat','tracks','colleges'].forEach(function(k){document.getElementById('g-tab-'+k).onclick=function(){gTab(k);};});
+  document.getElementById('g-back').onclick=function(){
+    if(G.order.length){var q=G.order.pop();delete G.ans[q];}
+    else{G.stage=null;G.ans={};}
+    drawGuide();
+  };
+  document.getElementById('g-colq').oninput=function(e){gColQ=e.target.value;drawCols();};
+  drawGuide();drawTracks();drawCols();gTab('chat');
+}
+
+/* ---------- catalog browser (courses + sports) ---------- */
+function card(it,sp,pl){
+  var lvl=it[2]==='kids'
+    ?'<span class="kidtag">للأطفال</span>'
+    :'<span class="lvl"><span class="bars" data-n="'+LVN[it[2]]+'"><i></i><i></i><i></i></span>'+LV[it[2]]+'</span>';
+  return '<article class="card">'
+    +'<div class="meta">'+lvl+'<span>'+esc(sp)+'</span></div>'
+    +'<h3>'+esc(it[0])+'</h3>'
+    +'<p>'+esc(it[1])+'</p>'
+    +'<a class="go" href="'+yt(it[3],pl)+'" target="_blank" rel="noopener noreferrer">'+(pl?'شوف قوائم الشرح على يوتيوب ':'شوف الفيديوهات على يوتيوب ')+ARROW+'</a>'
+    +'</article>';
+}
+function mount(p,data,pl,unit){
+  var $=function(id){return document.getElementById(p+'-'+id);};
+  var cat=Object.keys(data)[0],spec='all',lv='all';
+  function draw(){
+    var af=document.activeElement;
+    var specs=data[cat].specs,sk=Object.keys(specs);
+    var catEl=$('cat');
+    catEl.replaceChildren.apply(catEl,Object.keys(data).map(function(k){
+      return chip('cat',k,data[k].label,k===cat,function(){cat=k;spec='all';draw();});
+    }));
+    $('specrow').hidden=sk.length<2;
+    var spEl=$('spec');
+    spEl.replaceChildren.apply(spEl,[chip('spec','all','الكل',spec==='all',function(){spec='all';draw();})].concat(
+      sk.map(function(k){return chip('spec',k,specs[k].label,k===spec,function(){spec=k;draw();});})));
+    var lvEl=$('lv');
+    lvEl.replaceChildren.apply(lvEl,[chip('lv','all','الكل',lv==='all',function(){lv='all';draw();})].concat(
+      Object.keys(LV).map(function(k){return chip('lv',k,LV[k],k===lv,function(){lv=k;draw();});})));
+    var items=[];
+    (spec==='all'?sk:[spec]).forEach(function(k){
+      specs[k].items.forEach(function(it){items.push({it:it,sp:specs[k].label});});
+    });
+    var shown=items.filter(function(x){return lv==='all'||x.it[2]===lv;});
+    $('count').textContent=shown.length
+      ?'عرض '+shown.length+' '+unit
+      :'مفيش نتايج بالمستوى ده في القسم ده. جرّب مستوى تاني.';
+    $('list').innerHTML=shown.map(function(x){return card(x.it,x.sp,pl);}).join('');
+    keepFocus(document.getElementById('v-'+(p==='c'?'courses':'sports')),af);
+    CATSEL[p]=cat;if(typeof applyTheme==='function'&&curView===(p==='c'?'courses':'sports'))applyTheme();
+  }
+  draw();
+}
+
+var COURSES={
+ code:{label:'البرمجة',specs:{
+  fe:{label:'Frontend',items:[
+   ['HTML وCSS من الصفر','بتبني أول صفحة ويب وتتعلم الألوان والتخطيط.','beg','شرح HTML و CSS من الصفر كورس كامل'],
+   ['JavaScript للمبتدئين','المتغيرات والدوال والتعامل مع عناصر الصفحة.','beg','كورس JavaScript من الصفر عربي'],
+   ['صفحات متجاوبة مع الموبايل','Flexbox وGrid وضبط التصميم على كل الشاشات.','mid','Responsive design Flexbox Grid شرح عربي'],
+   ['React','بناء واجهات من مكونات صغيرة تتجمع مع بعض.','mid','كورس React عربي'],
+   ['مشروع Frontend كامل','من الفكرة للنشر على الإنترنت خطوة بخطوة.','adv','مشروع frontend كامل عربي']]},
+  be:{label:'Backend',items:[
+   ['Python للمبتدئين','لغة سهلة بتنفع للويب والبيانات والذكاء الاصطناعي.','beg','كورس بايثون من الصفر عربي'],
+   ['قواعد البيانات SQL','إزاي تخزن البيانات وتسأل عنها.','beg','كورس SQL عربي من الصفر'],
+   ['Node.js وExpress','بناء سيرفر وAPI بلغة JavaScript.','mid','كورس Node.js Express عربي'],
+   ['PHP وLaravel','إطار شغل مشهور لبناء مواقع ولوحات تحكم.','mid','كورس Laravel عربي'],
+   ['تصميم الـ API وتسجيل الدخول','REST وحماية الحسابات والبيانات.','adv','REST API authentication JWT شرح عربي']]},
+  sec:{label:'الأمن السيبراني',items:[
+   ['مدخل للأمن السيبراني','المجالات والوظائف وخريطة الطريق للبداية.','beg','مقدمة الأمن السيبراني خارطة طريق عربي'],
+   ['أساسيات الشبكات','إزاي الأجهزة بتتكلم مع بعض: IP وDNS والمنافذ.','beg','كورس شبكات الحاسب للمبتدئين عربي'],
+   ['Linux للمبتدئين','أوامر الطرفية، وهي أساس شغل الأمن السيبراني.','beg','كورس لينكس من الصفر عربي'],
+   ['اختبار الاختراق الأخلاقي','تجربة الثغرات على بيئات تدريب قانونية.','mid','Ethical hacking penetration testing course arabic'],
+   ['تدريب CTF','مسابقات عملية على منصات تدريب مرخّصة.','adv','CTF للمبتدئين شرح عربي']]},
+  mob:{label:'تطبيقات الموبايل',items:[
+   ['أساسيات Dart','اللغة اللي بيتبني بيها Flutter.','beg','كورس Dart من الصفر عربي'],
+   ['Flutter','تطبيق واحد بيشتغل على أندرويد وآيفون.','mid','كورس فلاتر عربي'],
+   ['Android بلغة Kotlin','تطبيقات أندرويد الأصلية.','mid','كورس Android Kotlin عربي']]},
+  ai:{label:'البيانات والذكاء الاصطناعي',items:[
+   ['Excel لتحليل البيانات','جداول ومعادلات وتقارير للمبتدئين.','beg','كورس اكسل من الصفر عربي'],
+   ['استخدام أدوات الذكاء الاصطناعي','إزاي تستفيد منها في المذاكرة والشغل.','beg','استخدام الذكاء الاصطناعي في الدراسة والعمل شرح'],
+   ['Python لتحليل البيانات','مكتبات pandas وNumPy وعمل رسومات.','mid','تحليل البيانات بايثون pandas عربي'],
+   ['تعلم الآلة','الفكرة وإزاي تدرّب نموذج بسيط.','adv','كورس تعلم الآلة machine learning عربي']]},
+  kids:{label:'للأطفال',items:[
+   ['Scratch للأطفال','منطق البرمجة بالسحب والإفلات وصنع ألعاب بسيطة.','kids','كورس سكراتش للأطفال عربي'],
+   ['صنع لعبة أولى','الطفل يطلع بلعبة صغيرة من تصميمه.','kids','عمل لعبة في سكراتش للمبتدئين'],
+   ['مقدمة في الروبوتات','أساسيات الدوائر والحساسات بشكل مبسط.','kids','روبوتات للأطفال أردوينو للمبتدئين']]},
+  base:{label:'الأساسيات',items:[
+   ['CS50 مقدمة علوم الحاسب','كورس جامعي مشهور، بيتشرح بالإنجليزي وفيه ترجمة.','mid','CS50 مترجم عربي'],
+   ['Git وGitHub','حفظ شغلك وتتبّع التعديلات والشغل مع فريق.','beg','كورس Git و GitHub عربي'],
+   ['حل المشكلات والخوارزميات','تفكير البرمجة قبل أي لغة.','mid','مقدمة الخوارزميات وحل المشكلات عربي']]}
+ }},
+ math:{label:'الرياضيات',specs:{
+  prep:{label:'الإعدادي',items:[
+   ['الجبر والمعادلات','حل المعادلات والتعبيرات الجبرية من الأساس.','beg','شرح الجبر للمرحلة الإعدادية'],
+   ['الهندسة والبرهان','الزوايا والمثلثات وطريقة كتابة البرهان.','beg','شرح الهندسة للمرحلة الإعدادية'],
+   ['الكسور والنسب','تأسيس الحساب بشكل مبسط.','kids','شرح الكسور والنسب المئوية للأطفال']]},
+  sec:{label:'الثانوي',items:[
+   ['التفاضل','النهايات والمشتقات وتطبيقاتها.','mid','شرح التفاضل ثانوية عامة'],
+   ['التكامل','التكامل وحساب المساحات والحجوم.','mid','شرح التكامل ثانوية عامة'],
+   ['حساب المثلثات','الدوال المثلثية وحل المعادلات.','mid','شرح حساب المثلثات ثانوية عامة'],
+   ['الهندسة التحليلية','المستقيم والدائرة والقطوع.','adv','شرح الهندسة التحليلية ثانوية عامة']]},
+  think:{label:'التفكير والمسابقات',items:[
+   ['المنطق وحل المسائل','طرق التفكير في مسائل غير مألوفة.','beg','تدريبات منطق ورياضيات للمسابقات'],
+   ['أولمبياد الرياضيات للمبتدئين','مسائل المسابقات بخطوات شرح.','adv','أولمبياد الرياضيات للمبتدئين شرح']]},
+  uni:{label:'الجامعة',items:[
+   ['الجبر الخطي','المصفوفات والمتجهات.','mid','كورس الجبر الخطي عربي'],
+   ['التفاضل والتكامل الجامعي','كالكيولس 1 و2 بأمثلة.','mid','كالكيولس تفاضل وتكامل شرح جامعي عربي'],
+   ['الإحصاء والاحتمالات','من الأساسيات للتوزيعات والاختبارات.','mid','الإحصاء والاحتمالات شرح عربي']]}
+ }},
+ biz:{label:'التجارة والأعمال',specs:{
+  acc:{label:'المحاسبة',items:[
+   ['مبادئ المحاسبة','القيود والميزانية من الصفر.','beg','كورس مبادئ المحاسبة من الصفر'],
+   ['Excel للمحاسبين','معادلات وتقارير مالية على الشيت.','mid','اكسل للمحاسبين كورس'],
+   ['محاسبة التكاليف','حساب تكلفة المنتج وتسعيره.','mid','شرح محاسبة التكاليف']]},
+  mk:{label:'التسويق الرقمي',items:[
+   ['التسويق الرقمي من الصفر','القنوات والجمهور وخطة تسويق بسيطة.','beg','كورس التسويق الرقمي من الصفر عربي'],
+   ['كتابة المحتوى','إزاي تكتب بوست وإعلان يوصل.','beg','كورس كتابة المحتوى التسويقي'],
+   ['إعلانات السوشيال ميديا','إعداد حملة وقياس نتيجتها.','mid','كورس اعلانات فيسبوك وانستجرام عربي'],
+   ['تحسين محركات البحث SEO','ظهور موقعك في نتايج جوجل.','mid','كورس SEO عربي']]},
+  start:{label:'ريادة الأعمال',items:[
+   ['ريادة الأعمال للمبتدئين','من الفكرة لأول عميل.','beg','كورس ريادة الأعمال للمبتدئين'],
+   ['الفريلانس: ابدأ إزاي؟','تختار خدمة وتعمل بروفايل وتاخد أول شغلانة.','beg','كورس الفريلانس للمبتدئين عربي'],
+   ['دراسة الجدوى','حساب التكلفة والإيراد قبل ما تصرف.','mid','كيف تعمل دراسة جدوى لمشروع شرح'],
+   ['تجربة الفكرة قبل التنفيذ','نسخة أولى بسيطة تختبر بيها السوق.','mid','MVP اختبار فكرة المشروع شرح']]},
+  fin:{label:'المال الشخصي',items:[
+   ['إدارة مصروفك وادخارك','ميزانية شخصية بسيطة وهدف ادخار.','beg','إدارة المصروف الشخصي والادخار شرح'],
+   ['أساسيات الاستثمار','المخاطر والعائد وتنويع المحفظة.','mid','أساسيات الاستثمار للمبتدئين عربي'],
+   ['قراءة القوائم المالية','الميزانية وقايمة الدخل وإزاي تفهمهم.','adv','قراءة القوائم المالية شرح']]}
+ }},
+ skill:{label:'اللغات والمهارات',specs:{
+  en:{label:'الإنجليزي',items:[
+   ['الإنجليزي من الصفر','الحروف والجمل الأساسية والنطق.','beg','تعلم اللغة الانجليزية من الصفر للمبتدئين'],
+   ['المحادثة اليومية','جمل وسيناريوهات بتستخدمها كل يوم.','mid','تعلم محادثة انجليزي يومية شرح'],
+   ['التحضير للآيلتس IELTS','استراتيجيات الأقسام الأربعة.','adv','IELTS شرح كامل عربي'],
+   ['الإنجليزي للأطفال','حروف وكلمات بالأغاني والقصص.','kids','تعليم الانجليزي للأطفال']]},
+  soft:{label:'مهارات شخصية',items:[
+   ['تنظيم الوقت والمذاكرة','جدول واقعي وطرق مذاكرة فعالة.','beg','تنظيم الوقت والمذاكرة الفعالة للطلاب'],
+   ['الإلقاء والتحدث أمام الناس','تقلل التوتر وترتب كلامك.','beg','كورس مهارات الالقاء والتحدث أمام الجمهور'],
+   ['السيرة الذاتية والمقابلات','كتابة CV والتحضير لمقابلة الشغل.','mid','كتابة السيرة الذاتية والتحضير للمقابلة الشخصية']]}
+ }},
+ design:{label:'التصميم والمونتاج',specs:{
+  gr:{label:'جرافيك',items:[
+   ['أساسيات التصميم','الألوان والخطوط والتكوين.','beg','اساسيات التصميم الجرافيكي للمبتدئين'],
+   ['فوتوشوب للمبتدئين','تعديل الصور وعمل تصميمات سوشيال ميديا.','beg','كورس فوتوشوب من الصفر عربي'],
+   ['Illustrator','رسم الشعارات والأشكال المتجهة.','mid','كورس اليستريتور عربي']]},
+  ux:{label:'UI/UX',items:[
+   ['مدخل UI/UX','الفرق بين التصميمين وخطوات المشروع.','beg','مقدمة UI UX عربي'],
+   ['Figma','تصميم شاشات وتطبيقات بشكل تفاعلي.','beg','كورس فيجما عربي'],
+   ['بناء Portfolio','تجمع شغلك في معرض يقدمك لأصحاب الشغل.','mid','بناء بورتفوليو مصمم UI UX']]},
+  vid:{label:'مونتاج',items:[
+   ['CapCut للمبتدئين','مونتاج سريع من الموبايل.','beg','كورس كاب كت للمبتدئين عربي'],
+   ['Premiere Pro','مونتاج فيديو احترافي على الكمبيوتر.','mid','كورس بريمير برو عربي'],
+   ['After Effects','حركة وجرافيك للفيديو.','adv','كورس افتر افكتس عربي']]}
+ }}
+};
+
+var SPORTS={
+ foot:{label:'كرة القدم',specs:{
+  skills:{label:'مهارات فردية',items:[
+   ['المراوغة','حركات بسيطة للتخلص من المدافع.','beg','تعلم المراوغة في كرة القدم للمبتدئين'],
+   ['التمرير القصير والطويل','دقة التمريرة ووضع القدم.','beg','تعلم التمرير في كرة القدم'],
+   ['التسديد','وضع الجسم وزاوية القدم وقوة الكرة.','beg','تعلم التسديد في كرة القدم'],
+   ['الاستلام والتحكم بالكرة','استقبال الكرة بالقدم والصدر والفخذ.','beg','تعلم استلام الكرة والتحكم فيها'],
+   ['اللعب بالقدمين','تقوية القدم الضعيفة.','mid','تمارين تقوية القدم الضعيفة كرة القدم'],
+   ['الكرات الثابتة','ضربات حرة وركلات ركنية.','mid','تعلم الضربات الحرة كرة القدم']]},
+  gk:{label:'حراسة المرمى',items:[
+   ['أساسيات حراسة المرمى','الوقفة والإمساك والارتماء.','beg','تعلم حراسة المرمى للمبتدئين'],
+   ['تمارين رد الفعل','سرعة التحرك وقراءة التسديدة.','mid','تمارين حارس المرمى رد الفعل'],
+   ['اللعب بالقدم للحارس','التمرير والخروج من الخلف.','adv','حارس المرمى اللعب بالقدم تمارين']]},
+  fit:{label:'لياقة',items:[
+   ['إحماء لاعب الكرة','إحماء كامل قبل التمرين والمباراة.','beg','إحماء لاعب كرة القدم قبل المباراة'],
+   ['تمارين السرعة والرشاقة','تغيير الاتجاه وسرعة الانطلاق.','mid','تمارين السرعة والرشاقة للاعبي كرة القدم'],
+   ['تقوية العضلات لمنع الإصابات','عضلات الرجل والجذع.','mid','تمارين تقوية للاعب كرة القدم منع الاصابات']]},
+  tac:{label:'فهم اللعبة',items:[
+   ['مراكز اللاعبين','دور كل مركز في الملعب.','beg','شرح مراكز اللاعبين في كرة القدم'],
+   ['التمركز وقراءة اللعب','مكانك وقت الهجوم والدفاع.','mid','كيف تقرأ اللعب في كرة القدم تكتيك'],
+   ['الخطط والتشكيلات','4-4-2 و4-3-3 وغيرها.','adv','شرح خطط وتشكيلات كرة القدم']]}
+ }},
+ bask:{label:'كرة السلة',specs:{
+  all:{label:'مهارات',items:[
+   ['التصويب','الوقفة وحركة اليد والمتابعة.','beg','تعلم تصويب كرة السلة للمبتدئين'],
+   ['الدريبل','التحكم بالكرة باليدين.','beg','تعلم الدريبل في كرة السلة'],
+   ['الدفاع الفردي','وقفة الدفاع والانزلاق.','mid','تعلم الدفاع في كرة السلة']]}
+ }},
+ swim:{label:'السباحة',specs:{
+  all:{label:'مهارات',items:[
+   ['تعلم السباحة من الصفر','الطفو والأمان في الماء.','beg','تعلم السباحة للمبتدئين'],
+   ['التنفس في السباحة','توقيت الشهيق والزفير.','beg','تعلم التنفس في السباحة'],
+   ['أسلوب الزحف الحر','حركة الذراعين والرجلين.','mid','تعلم سباحة الزحف الحر'],
+   ['السباحة للأطفال','تعويد الطفل على الماء بالتدريج.','kids','تعليم السباحة للأطفال']]}
+ }},
+ tt:{label:'تنس الطاولة',specs:{
+  all:{label:'مهارات',items:[
+   ['مسكة المضرب والوقفة','أساس كل الضربات.','beg','تعلم تنس الطاولة للمبتدئين'],
+   ['الضربة الأمامية والخلفية','الضربات الأساسية بالتفصيل.','beg','تعلم ضربات تنس الطاولة الأساسية'],
+   ['الإرسال والتدوير','أنواع الإرسال وتأثير الكرة.','mid','تعلم الإرسال في تنس الطاولة']]}
+ }},
+ vol:{label:'الكرة الطائرة',specs:{
+  all:{label:'مهارات',items:[
+   ['الإرسال','إرسال من الأسفل ومن الأعلى.','beg','تعلم الارسال في الكرة الطائرة'],
+   ['الاستقبال','وضع الذراعين والتحرك للكرة.','beg','تعلم الاستقبال في الكرة الطائرة'],
+   ['الضرب الساحق','الاقتراب والقفز وضرب الكرة.','mid','تعلم الضرب الساحق في الكرة الطائرة']]}
+ }},
+ mart:{label:'الفنون القتالية',specs:{
+  all:{label:'مهارات',items:[
+   ['الإحماء والمرونة','تجهيز الجسم لتجنب الإصابة.','beg','احماء ومرونة للفنون القتالية'],
+   ['أساسيات الكاراتيه','الوقفات واللكمات والركلات الأساسية.','beg','تعلم الكاراتيه للمبتدئين'],
+   ['أساسيات الجودو','السقوط الآمن وحركات الرمي.','mid','تعلم الجودو للمبتدئين']]}
+ }},
+ fit:{label:'الجري واللياقة',specs:{
+  all:{label:'تمارين',items:[
+   ['الجري للمبتدئين','تبدأ بمسافات قصيرة وتزود بالتدريج.','beg','الجري للمبتدئين خطة'],
+   ['تمارين بوزن الجسم','ضغط وسكوات وبلانك بالشكل الصحيح.','beg','تمارين بوزن الجسم للمبتدئين'],
+   ['الإطالة بعد التمرين','تقليل الشد والإصابات.','beg','تمارين الاطالة بعد التمرين']]}
+ }}
+};
+
+/* ---------- teachers (secondary only) ---------- */
+var TEACHERS=[
+{
+"n": "بسطتهالك - محمد صلاح",
+"u": "https://www.youtube.com/@mohamedsalah.bassthalk",
+"s": 6130000,
+"d": "2026-11",
+"g": [],
+"x": [
+"ar"
+],
+"note": "لغة عربية للثانوية العامة: تأسيس النحو والبلاغة وغيرهم. الصفوف مش مذكورة في وصف القناة، فاختار من قوايمه"
+},
+{
+"n": "Mr. Mohab Salama _ مستر مهاب سلامه",
+"u": "https://www.youtube.com/@mr.mohab_salama",
+"s": 2670000,
+"d": "2026-11",
+"g": [],
+"x": [
+"his"
+],
+"note": "مستر مهاب سلامه، تاريخ. من عناوين فيديوهاته: شرح الحضارة والتاريخ لأولى ثانوي عام وبكالوريا 2027"
+},
+{
+"n": "Dr Mohamed Ayman - د.محمد أيمن",
+"u": "https://www.youtube.com/@DrMohamedAyman",
+"s": 2070000,
+"d": "2025-06",
+"g": [
+"s3"
+],
+"x": [
+"bio",
+"geol"
+],
+"note": "أحياء وجيولوجيا تالتة ثانوي (عام وأزهري) من وصف القناة؛ عدد المشتركين قديم"
+},
+{
+"n": "Reda El Farouk - رضا الفاروق",
+"u": "https://www.youtube.com/@redaelfaroukofficial",
+"s": 1570000,
+"d": "2026-11",
+"g": [],
+"x": [
+"ar"
+],
+"note": "لغة عربية: أدب وبلاغة وتعبير ونحو، ومراجعات ليالي الامتحان"
+},
+{
+"n": "Mr Mohamed AbdelMaaboud",
+"u": "https://www.youtube.com/@mr.abdelmaaboud",
+"s": 1500000,
+"d": "2026-10",
+"g": [
+"s3"
+],
+"x": [
+"phys"
+],
+"note": "فيزياء تالتة ثانوي، شرح ومراجعات 2026"
+},
+{
+"n": "Mahmoud Radwan - إنجلشاوي",
+"u": "https://www.youtube.com/@mahmoudradwan.englishawy",
+"s": 1500000,
+"d": "2026-11",
+"g": [],
+"x": [
+"en"
+],
+"note": "مستر محمود رضوان، إنجليزي. فيديوهاته موجهة لطلاب الثانوية العامة"
+},
+{
+"n": "الخطة التعليمية - الثالث الثانوي",
+"u": "https://www.youtube.com/@elkheta-senior3",
+"s": 1080000,
+"d": "2026-11",
+"g": [
+"s3"
+],
+"x": [
+"chem",
+"geog"
+],
+"note": "منصة متعددة المواد، آخر فيديو كيمياء تالتة ثانوي"
+},
+{
+"n": "يلا نفهم math",
+"u": "https://www.youtube.com/channel/UCmTe6AzfR17JRCymQadVSOg",
+"s": 941000,
+"d": "2026-11",
+"g": [
+"s2",
+"s3"
+],
+"x": [
+"math"
+],
+"note": "رياضيات تانية وتالتة ثانوي (مستر أحمد سرور)"
+},
+{
+"n": "Hossam Mirah Math",
+"u": "https://www.youtube.com/@hossammirah",
+"s": 433000,
+"d": "2026-11",
+"g": [
+"s2"
+],
+"x": [
+"math"
+],
+"note": "رياضيات تانية ثانوي وتانية بكالوريا"
+},
+{
+"n": "الفيزياء والحياة م. محمد وصفى",
+"u": "https://www.youtube.com/channel/UC1mLlpeRZ0E0UCEcnnrlchw",
+"s": 334000,
+"d": "2026-11",
+"g": [
+"s3"
+],
+"x": [
+"phys"
+],
+"note": "حل كتاب الامتحان فيزياء تالتة ثانوي 2027"
+},
+{
+"n": "الكيمياء مع محمد حامد",
+"u": "https://www.youtube.com/channel/UC96eFiOzOThOlrh7jLdgkYA",
+"s": 263000,
+"d": "2025-07",
+"g": [
+"s1",
+"s2"
+],
+"x": [
+"chem"
+],
+"note": "كيمياء المرحلة الثانوية (الوصف يذكر الثلاث سنوات)"
+},
+{
+"n": "المُهندس في الفيزياء",
+"u": "https://www.youtube.com/@eng.mahmoudsalah-m",
+"s": 252000,
+"d": "2026-11",
+"g": [
+"s3"
+],
+"x": [
+"phys"
+],
+"note": "م. محمود صلاح، فيزياء الثانوية العامة (تالتة ثانوي)"
+},
+{
+"n": "Ahmed Salah Elsahy ( دكتور الساهي )",
+"u": "https://www.youtube.com/@drelsahy",
+"s": 217000,
+"d": "2026-11",
+"g": [
+"s3"
+],
+"x": [
+"phys"
+],
+"note": "مراجعات فيزياء للثانوية العامة، آخر فيديو نوفمبر 2026 (الصف مستنتج من الوصف)"
+},
+{
+"n": "Mr Ahmed adel كلام مؤرخين",
+"u": "https://www.youtube.com/channel/UCFRnk922CMuYcQACFBEomcg",
+"s": 189000,
+"d": "2025-04",
+"g": [],
+"x": [
+"his"
+],
+"note": "قناة المؤرخ لشرح التاريخ في الثانوية العامة؛ الصفوف غير مؤكدة بالكامل، الإحصاء بتاريخ أبريل 2025"
+},
+{
+"n": "محمد عبيد / Mohamed Ebied",
+"u": "https://www.youtube.com/@eng_mohamed_ebied",
+"s": 179000,
+"d": "2026-11",
+"g": [
+"s2",
+"s3"
+],
+"x": [
+"phys"
+],
+"note": "حل كتاب الامتحان فيزياء تانية وتالتة ثانوي"
+},
+{
+"n": "sameh ahmed",
+"u": "https://www.youtube.com/channel/UCFA46deucvWdrU8E85n1ehA",
+"s": 175000,
+"d": "2025-06",
+"g": [
+"s1",
+"s2"
+],
+"x": [
+"bio"
+],
+"note": "أحياء ثانوي (وسوم الصفحة تذكر أولى وتانية وتالتة ثانوي)"
+},
+{
+"n": "مستر أحمدعبدالفتاح / دروس رياضيات أونلاين",
+"u": "https://www.youtube.com/@math-mrahmedabdelfatah",
+"s": 150000,
+"d": "2026-11",
+"g": [
+"s1"
+],
+"x": [
+"math"
+],
+"note": "رياضيات، معظمها إعدادي مع أولى ثانوي"
+},
+{
+"n": "فرنشاوي Frenchawy",
+"u": "https://www.youtube.com/@frenchawy",
+"s": null,
+"d": "",
+"g": [
+"s1",
+"s3"
+],
+"x": [
+"fr"
+],
+"note": "مسيو وليد مصطفى، فرنساوي ثانوية عامة؛ العدد غير متاح"
+},
+{
+"n": "مستر عادل أحياء وجيولوجيا",
+"u": "https://www.youtube.com/channel/UCiYbpehl5_o8OuRXlFbr9Pw",
+"s": null,
+"d": "",
+"g": [
+"s1",
+"s2",
+"s3"
+],
+"x": [
+"bio",
+"geol"
+],
+"note": "أحياء وجيولوجيا للثانوية العامة (من وصف القناة)"
+},
+{
+"n": "مستر محمد البلتاجي",
+"u": "https://www.youtube.com/@mohammedelbltagy",
+"s": null,
+"d": "",
+"g": [
+"s3"
+],
+"x": [
+"geol"
+],
+"note": "جيولوجيا الثانوية العامة (الصف غير مذكور، المادة تدرس في تالتة)"
+},
+{
+"n": "مستر / لطفي زهران - Mr / Lotfy zahran",
+"u": "https://www.youtube.com/channel/UCuBEhySbnVUQhkWhQMCKsxA",
+"s": null,
+"d": "",
+"g": [],
+"x": [
+"math"
+],
+"note": "رياضيات. منصته فيها كورسات أولى ثانوي (جبر وهندسة). الصفوف التانية تأكد منها جوه القناة"
+},
+{
+"n": "عبقري اللغة - مستر أحمد طارق",
+"u": "",
+"s": null,
+"d": "",
+"g": [],
+"x": [
+"en"
+],
+"note": "إنجليزي ثانوي، مراجعات شهرية وليالي امتحان. اسم المدرس من مواقع المراجعات، ورابط قناته مش متأكد منه فبيفتح بحث"
+},
+{
+"n": "المهندس كمال المراكبي",
+"u": "",
+"s": null,
+"d": "",
+"g": [],
+"x": [
+"ict"
+],
+"note": "برمجة. ترشيح من صاحب الموقع، وعدد المشتركين ورابط القناة لسه مش متأكد منهم فبيفتح بحث على يوتيوب"
+},
+{
+"n": "أ/ أحمد السقا - Mr Ahmed Elsaka",
+"u": "",
+"s": null,
+"d": "",
+"g": [],
+"x": [
+"ict"
+],
+"note": "برمجة. ترشيح من صاحب الموقع، وعدد المشتركين ورابط القناة لسه مش متأكد منهم فبيفتح بحث على يوتيوب"
+},
+{
+"n": "احمد هشام - Ahmed Hesham",
+"u": "",
+"s": null,
+"d": "",
+"g": [
+"s1"
+],
+"x": [
+"integ"
+],
+"note": "علوم متكاملة أولى ثانوي. رابط قناته مش متأكد منه فبيفتح بحث"
+},
+{
+"n": "د.أحمد الجوهري - Ahmed ElGohary",
+"u": "",
+"s": null,
+"d": "",
+"g": [
+"s1"
+],
+"x": [
+"integ"
+],
+"note": "علوم متكاملة أولى ثانوي. رابط قناته مش متأكد منه فبيفتح بحث"
+}
+];
+/* direct video links: key 'اسم القناة|المادة|الصف|الشهر' -> YouTube link or 11-character video id */
+var VIDEOS={};
+var TSUBJ=[['ar','عربي'],['en','إنجليزي'],['fr','فرنساوي'],['de','ألماني'],['math','رياضيات'],['phys','فيزياء'],['chem','كيمياء'],['bio','أحياء'],['geol','جيولوجيا'],['his','تاريخ'],['geog','جغرافيا'],['phil','فلسفة ومنطق'],['psy','علم نفس واجتماع'],['stat','إحصاء'],['ict','حاسب آلي']];
+var TGR=[['s1','أولى ثانوي'],['s2','تانية ثانوي'],['s3','تالتة ثانوي']];
+var TGL={s1:'أولى ثانوي',s2:'تانية ثانوي',s3:'تالتة ثانوي'};
+function fmtSubs(n){
+  if(n>=1000000){var m=(n/1000000).toFixed(n>=10000000?0:2).replace(/\.?0+$/,'');return m+' مليون';}
+  if(n>=1000)return Math.round(n/1000)+' ألف';
+  return String(n);
+}
+function mountTeachers(){
+  var gr=null,trk=null,subj=null,sel=null,openSum=null,qz=null,anim={trk:false,subj:false};
+  var MONTHS=[[9,'أكتوبر'],[10,'نوفمبر'],[11,'ديسمبر'],[0,'يناير'],[1,'فبراير'],[2,'مارس'],[3,'أبريل'],[4,'مايو']];
+  var now=new Date();
+  var ay=now.getMonth()>=8?now.getFullYear():now.getFullYear()-1;
+  var ALIAS={'إنجليزي':'لغة أجنبية أولى','انجليزي':'لغة أجنبية أولى','إنجليزى':'لغة أجنبية أولى'};
+  function isCur(m){var yr=m[0]>=8?ay:ay+1;return now.getFullYear()===yr&&now.getMonth()===m[0];}
+  function curKey(){return sel+'|'+subj+'|'+gr;}
+  function rowOf(t,m){
+    var rows=window.REVIEWS||[];
+    var s=subjObj(),label=s?s[1]:'',gl=TGL[gr],tn=t.n.toLowerCase();
+    for(var i=0;i<rows.length;i++){
+      var r=rows[i];
+      if(!r||r.length<5)continue;
+      var rl=String(r[1]).trim();rl=ALIAS[rl]||rl;
+      if(String(r[3]).trim()!==m||rl!==label||String(r[2]).trim()!==gl)continue;
+      var nm=String(r[0]).trim().toLowerCase();
+      if(!nm||tn.indexOf(nm)<0)continue;
+      var v=String(r[4]).trim(),url='';
+      if(/^[A-Za-z0-9_-]{11}$/.test(v))url='https://www.youtube.com/watch?v='+v;
+      else if(/^https:\/\/(www\.|m\.)?(youtube\.com\/(watch|shorts|live|embed)|youtu\.be\/)/.test(v))url=v;
+      if(url)return {v:url,s:r.length>5?String(r[5]==null?'':r[5]).trim():'',q:Array.isArray(r[6])?r[6]:null};
+    }
+    return null;
+  }
+  function fmtSum(txt){
+    var out='',cur=0;
+    function inl(x){return esc(x).replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>');}
+    function cl(){while(cur>0){out+='</li></ul>';cur--;}}
+    function bul(d,x){
+      d=Math.min(d,cur+1);
+      if(cur===0){out+='<ul class="dul">';cur=1;}
+      else if(d>cur){out+='<ul class="dul">';cur++;}
+      else{while(cur>d){out+='</li></ul>';cur--;}out+='</li>';}
+      out+='<li>'+inl(x);
+    }
+    String(txt).split(/\r?\n/).forEach(function(l){
+      l=l.trim();if(!l)return;
+      var h=/^###\s+(.*)$/.exec(l);
+      if(h){cl();out+='<p class="subh">'+inl(h[1])+'</p>';return;}
+      h=/^##\s+(.*)$/.exec(l);
+      if(h){cl();out+='<h4 class="sumh">'+esc(h[1])+'</h4>';return;}
+      if(/^\d+[.)]\s+/.test(l)){cl();out+='<p class="sumn">'+(l.indexOf('**')<0?'<strong>'+esc(l)+'</strong>':inl(l))+'</p>';return;}
+      var b=/^(-{1,3}|•|\*)\s*(.*)$/.exec(l);
+      if(b){bul(b[1].charAt(0)==='-'?b[1].length:1,b[2]);return;}
+      cl();out+='<p>'+inl(l)+'</p>';
+    });
+    cl();return out;
+  }
+  function sumPanel(t){
+    if(!openSum||openSum.k!==curKey())return '';
+    var rw=rowOf(t,openSum.m);
+    if(!rw||!rw.s||/^https:\/\//.test(rw.s))return '';
+    return '<div class="sumbox" id="t-sumbox"><h3>ملخص مراجعة '+esc(openSum.m)+'</h3>'+fmtSum(rw.s)+'</div>';
+  }
+  var qz=null;
+  function shuf(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),x=a[i];a[i]=a[j];a[j]=x;}return a;}
+  function buildQuiz(Q,n){
+    var all=[];
+    Q.forEach(function(g,gi){g.c.forEach(function(c){var ex=c.length>2;all.push({g:gi,q:c[0],a:ex?c[1][c[2]]:c[1],o:ex?c[1]:null});});});
+    var pick=[];
+    if(n>=all.length)pick=all.slice();
+    else{
+      var lists=shuf(Q.map(function(g,gi){return shuf(all.filter(function(x){return x.g===gi;}));}));
+      while(pick.length<n){
+        var moved=false;
+        for(var i=0;i<lists.length&&pick.length<n;i++){if(lists[i].length){pick.push(lists[i].shift());moved=true;}}
+        if(!moved)break;
+      }
+    }
+    return shuf(pick).map(function(it){
+      if(it.o){var oo=shuf(it.o);return {g:it.g,q:it.q,a:it.a,o:oo,ci:oo.indexOf(it.a),p:-1};}
+      var list=/\n/.test(it.a);
+      var others=all.filter(function(x){return x!==it&&!x.o&&x.a!==it.a;});
+      var same=shuf(others.filter(function(x){return x.g===it.g&&/\n/.test(x.a)===list;}));
+      var sameG=shuf(others.filter(function(x){return x.g===it.g&&/\n/.test(x.a)!==list;}));
+      var rest=shuf(others.filter(function(x){return x.g!==it.g&&/\n/.test(x.a)===list;}));
+      var rest2=shuf(others.filter(function(x){return x.g!==it.g&&/\n/.test(x.a)!==list;}));
+      var pool=same.concat(sameG,rest,rest2),opts=[it.a];
+      for(var k=0;k<pool.length&&opts.length<4;k++){if(opts.indexOf(pool[k].a)<0)opts.push(pool[k].a);}
+      opts=shuf(opts);
+      return {g:it.g,q:it.q,a:it.a,o:opts,ci:opts.indexOf(it.a),p:-1};
+    });
+  }
+  function qHtml(s){return esc(s).replace(/\n/g,'<br>');}
+  function quizPanel(t){
+    if(!qz||qz.k!==curKey())return '';
+    var rw=rowOf(t,qz.m);
+    if(!rw||!rw.q)return '';
+    var Q=rw.q,total=0;
+    Q.forEach(function(g){total+=g.c.length;});
+    var head='<div class="qhead"><h3>اختبر نفسك: مراجعة '+esc(qz.m)+'</h3><button type="button" class="gback" data-qz="close">قفل الاختبار</button></div>';
+    if(qz.phase==='start'){
+      return '<div class="quiz" id="t-quiz" tabindex="-1">'+head
+        +'<p>أسئلة اختيار من متعدد على المراجعة دي ('+total+' سؤال متقسمين على '+Q.length+' أجزاء). بعد ما تخلص هنطلعلك نتيجتك وهنقولك إنت ضعيف في أنهي جزء.</p>'
+        +'<div class="macts">'+(total<=20?'<button type="button" class="mact watch" data-qz="start" data-n="'+total+'">ابدأ الاختبار ('+total+' سؤال)</button>'
+        :'<button type="button" class="mact watch" data-qz="start" data-n="20">ابدأ بـ 20 سؤال</button><button type="button" class="mact sum" data-qz="start" data-n="'+total+'">اختبار شامل ('+total+' سؤال)</button>')+'</div></div>';
+    }
+    var n=qz.items.length;
+    if(qz.phase==='run'){
+      var it=qz.items[qz.i],done=it.p>=0;
+      var opts=it.o.map(function(o,i){
+        var cls='qopt',mark='';
+        if(done){
+          if(i===it.ci){cls+=' ok';mark='<b>✔ </b>';}
+          else if(i===it.p){cls+=' bad';mark='<b>✘ </b>';}
+          else cls+=' dim';
+        }
+        return '<button type="button" dir="auto" class="'+cls+'" data-qz="pick" data-i="'+i+'"'+(done?' aria-disabled="true"':'')+'>'+mark+qHtml(o)+'</button>';
+      }).join('');
+      var fb='';
+      if(done){
+        var okk=it.p===it.ci;
+        fb='<p class="qfb '+(okk?'ok':'bad')+'" role="status">'+(okk?'✔ إجابتك صح.':'✘ إجابتك غلط. الإجابة الصح متعلم عليها فوق.')+'</p>'
+          +'<button type="button" class="mact watch" id="t-qnext" data-qz="next">'+(qz.i===n-1?'شوف النتيجة':'السؤال اللي بعده')+'</button>';
+      }
+      return '<div class="quiz" id="t-quiz" tabindex="-1">'+head
+        +'<div class="gbar"><div class="track"><i style="width:'+Math.round((qz.i+(done?1:0))/n*100)+'%"></i></div><span>سؤال '+(qz.i+1)+' من '+n+' · '+esc(Q[it.g].t)+'</span></div>'
+        +'<p class="qq" dir="auto">'+esc(it.q)+'</p><div class="qopts">'+opts+'</div>'+fb+'</div>';
+    }
+    var right=0,by=Q.map(function(g){return {t:g.t,r:0,n:0};}),wrong=[];
+    qz.items.forEach(function(it){
+      by[it.g].n++;
+      if(it.p===it.ci){right++;by[it.g].r++;}else wrong.push(it);
+    });
+    var pc=Math.round(right/n*100);
+    var msg=pc>=85?'ممتاز، إنت متمكن من المراجعة دي.':pc>=60?'كويس، بس لسه فيه نقط محتاجة مراجعة.':'محتاج تراجع المراجعة تاني قبل الامتحان.';
+    var rows=by.filter(function(x){return x.n>0;}).map(function(x){x.p=Math.round(x.r/x.n*100);return x;});
+    rows.sort(function(a,b){return a.p-b.p;});
+    var weak=rows.filter(function(x){return x.p<60;});
+    var lvl=function(p){return p<60?['ضعيف','bad']:p<80?['متوسط','mid']:['قوي','ok'];};
+    var tbl=rows.map(function(x){
+      var l=lvl(x.p);
+      return '<div class="qrow"><span class="qt">'+esc(x.t)+'</span><span class="qbar"><i class="'+l[1]+'" style="width:'+x.p+'%"></i></span><span class="qn">'+x.r+' من '+x.n+' · <b class="'+l[1]+'">'+l[0]+'</b></span></div>';
+    }).join('');
+    var wk=weak.length
+      ?'<p class="qweak"><strong>الحتت اللي إنت ضعيف فيها:</strong> '+weak.map(function(x){return esc(x.t);}).join('، ')+'. ارجع لفيديو المراجعة والملخص وركز عليها.</p>'
+      :'<p class="qweak"><strong>مفيش حتة ضعيفة واضحة.</strong> كل الأجزاء اللي اتسألت فيها فوق 60%.</p>';
+    var wl=wrong.length?'<details class="qwrong" open><summary>الأسئلة اللي غلطت فيها ('+wrong.length+')</summary>'
+      +wrong.map(function(it){return '<div class="qw"><p class="qq" dir="auto">'+esc(it.q)+'</p><p class="qm" dir="auto">إجابتك: '+qHtml(it.o[it.p])+'</p><p class="qr" dir="auto">الصح: '+qHtml(it.a)+'</p></div>';}).join('')+'</details>':'';
+    return '<div class="quiz" id="t-quiz" tabindex="-1">'+head
+      +'<p class="qscore" role="status">نتيجتك: '+right+' من '+n+' ('+pc+'%)</p><p>'+msg+'</p>'+wk
+      +'<div class="qtbl">'+tbl+'</div>'+wl
+      +'<div class="macts"><button type="button" class="mact watch" data-qz="retry">اختبار تاني</button><button type="button" class="mact sum" data-qz="close">قفل</button></div></div>';
+  }
+  function drawReviews(){
+    var box=document.getElementById('t-reviews');
+    var s=subjObj();
+    var t=sel&&TEACHERS.filter(function(x){return x.n===sel;})[0];
+    if(!t||!s||teachersFor().indexOf(t)<0){box.hidden=true;box.innerHTML='';return;}
+    var gl=TGL[gr],out=0;
+    var cells=MONTHS.map(function(m){
+      var rw=rowOf(t,m[1]);
+      if(!rw)return '<div class="month soon"><strong>'+m[1]+'</strong><span>لسه ما جاش</span></div>';
+      out++;
+      var sm=rw.s,isUrl=/^https:\/\//.test(sm),op=openSum&&openSum.k===curKey()&&openSum.m===m[1];
+      var sb=!sm?'<span class="mact off">الملخص قريبًا</span>'
+        :isUrl?'<a class="mact sum" href="'+esc(sm)+'" target="_blank" rel="noopener noreferrer">ملخص المراجعة</a>'
+        :'<button type="button" class="mact sum" data-m="'+m[1]+'" aria-expanded="'+(op?'true':'false')+'">ملخص المراجعة</button>';
+      return '<div class="month direct'+(isCur(m)?' cur':'')+'"><strong>مراجعة '+m[1]+'</strong><span class="badge-out">نزلت</span><div class="macts">'
+        +'<a class="mact watch" href="'+esc(rw.v)+'" target="_blank" rel="noopener noreferrer">شاهد الفيديو</a>'+sb
+        +(rw.q?'<button type="button" class="mact quiz" data-qz="open" data-m="'+m[1]+'">اختبر نفسك</button>':'')+'</div></div>';
+    }).join('');
+    box.hidden=false;
+    box.innerHTML='<div class="rhead"><p class="kicker">مراجعات '+esc(t.n)+'</p>'
+      +'<h2>'+esc(s[1])+' - '+esc(gl)+' - '+ay+'/'+(ay+1)+'</h2>'
+      +'<p class="why">نزل '+out+' من '+MONTHS.length+' مراجعات</p></div>'
+      +'<div class="months">'+cells+'</div>'+sumPanel(t)+quizPanel(t)
+      +(Array.isArray(window.REVIEWS)?'':'<p class="warnbox">فيه غلطة في ملف videos.js فالروابط مش بتظهر. اتأكد إن كل سطر جوه القايمة (بين [ و ]) وفي آخره فاصلة، وإن مفيش سطر تحت علامة ];</p>')
+      +'<p class="note">الشهر اللي عليه «نزلت» عليه فيديو المراجعة، والباقي هيتفتح أول ما المدرس ينزل مراجعته.</p>';
+  }
+  var root=document.getElementById('v-teachers');
+  var T1=[['ar','عربي'],['fl1','لغة أجنبية أولى'],['his','تاريخ'],['math','رياضيات'],['integ','علوم متكاملة'],['phil','فلسفة ومنطق']];
+  var SCI2=[['ar','عربي'],['fl1','لغة أجنبية أولى'],['math','رياضيات'],['his','تاريخ'],['chem','كيمياء'],['phys','فيزياء']];
+  var TTR=[
+    {id:'bS',n:'بكالوريا: الطب وعلوم الحياة',
+     s2:[['ar','عربي'],['fl1','لغة أجنبية أولى'],['his','تاريخ'],['math','رياضيات',1],['phys','فيزياء',1]],
+     s3:[['bio','أحياء'],['chem','كيمياء']],
+     n2:'في تانية ثانوي بتختار مادة تخصصية واحدة من: رياضيات أو فيزياء.'},
+    {id:'bM',n:'بكالوريا: الهندسة وعلوم الحاسب',
+     s2:[['ar','عربي'],['fl1','لغة أجنبية أولى'],['his','تاريخ'],['chem','كيمياء',1],['prog','البرمجة والذكاء الاصطناعي',1]],
+     s3:[['math','رياضيات'],['phys','فيزياء']],
+     n2:'في تانية ثانوي بتختار مادة تخصصية واحدة من: كيمياء أو البرمجة والذكاء الاصطناعي.'},
+    {id:'bB',n:'بكالوريا: الأعمال',
+     s2:[['ar','عربي'],['fl1','لغة أجنبية أولى'],['his','تاريخ'],['acc','محاسبة',1],['mgmt','إدارة أعمال',1]],
+     s3:[['econ','اقتصاد'],['math','رياضيات']],
+     n2:'في تانية ثانوي بتختار مادة تخصصية واحدة من: محاسبة أو إدارة أعمال.'},
+    {id:'bL',n:'بكالوريا: الآداب والفنون',
+     s2:[['ar','عربي'],['fl1','لغة أجنبية أولى'],['his','تاريخ'],['psy','علم نفس',1],['fl2','لغة أجنبية تانية',1]],
+     s3:[['geog','جغرافيا'],['stat','إحصاء']],
+     n2:'في تانية ثانوي بتختار مادة تخصصية واحدة من: علم نفس أو لغة أجنبية تانية.'},
+    {id:'gS',n:'ثانوية عامة: علمي علوم',s2:SCI2,s3:[['ar','عربي'],['fl1','لغة أجنبية أولى'],['bio','أحياء'],['chem','كيمياء'],['phys','فيزياء']],n2:'في تانية ثانوي علمي، الشعبة بتبقى واحدة للعلوم والرياضة وبتتفرع في تالتة.'},
+    {id:'gM',n:'ثانوية عامة: علمي رياضة',s2:SCI2,s3:[['ar','عربي'],['fl1','لغة أجنبية أولى'],['math','رياضيات'],['chem','كيمياء'],['phys','فيزياء']],n2:'في تانية ثانوي علمي، الشعبة بتبقى واحدة للعلوم والرياضة وبتتفرع في تالتة.'},
+    {id:'gL',n:'ثانوية عامة: أدبي',s2:[['ar','عربي'],['fl1','لغة أجنبية أولى'],['his','تاريخ'],['geog','جغرافيا'],['psy','علم نفس'],['math','رياضيات']],s3:[['ar','عربي'],['fl1','لغة أجنبية أولى'],['his','تاريخ'],['geog','جغرافيا'],['stat','إحصاء']],n2:''}
+  ];
+  /* which teacher subject codes cover each school subject (empty = no verified teachers yet) */
+  var TMAP={ar:['ar'],fl1:['en'],fl2:['fr','de'],his:['his'],math:['math'],phys:['phys'],chem:['chem'],bio:['bio'],geog:['geog'],psy:['psy'],stat:['stat'],phil:['phil'],prog:['ict'],integ:['integ'],acc:[],mgmt:[],econ:[]};
+  function trackObj(){return TTR.filter(function(t){return t.id===trk;})[0]||null;}
+  function subjList(){
+    if(!gr)return null;
+    if(gr==='s1')return T1;
+    var t=trackObj();
+    if(!t)return null;
+    return gr==='s2'?t.s2:t.s3;
+  }
+  function subjObj(){var l=subjList()||[];return l.filter(function(s){return s[0]===subj;})[0]||null;}
+  function teachersFor(){
+    var s=subjObj();
+    if(!s||!gr)return [];
+    var codes=TMAP[s[0]]||[];
+    return TEACHERS.filter(function(t){
+      return codes.some(function(c){return t.x.indexOf(c)>-1;})&&(t.g.indexOf(gr)>-1||t.g.length===0);
+    });
+  }
+  function chanSearch(t,q){
+    var b=t.u?t.u.replace(/\/+$/,''):'';
+    return b?b+'/search?query='+encodeURIComponent(q):yt(t.n+' '+q,false);
+  }
+  function stagger(el){
+    [].slice.call(el.children).forEach(function(c,i){c.classList.add('pop-in');c.style.animationDelay=(i*45)+'ms';});
+  }
+  function draw(){
+    var af=document.activeElement;
+    var ge=document.getElementById('t-gr');
+    ge.replaceChildren.apply(ge,TGR.map(function(g){
+      return chip('tgr',g[0],g[1],g[0]===gr,function(){
+        gr=g[0];trk=null;subj=null;sel=null;anim.trk=(gr!=='s1');anim.subj=(gr==='s1');draw();
+      });
+    }));
+    var needTrk=gr&&gr!=='s1';
+    var tr=document.getElementById('t-trk-row');
+    tr.hidden=!needTrk;
+    if(needTrk){
+      var te=document.getElementById('t-trk');
+      te.replaceChildren.apply(te,TTR.map(function(t){
+        return chip('ttrk',t.id,t.n,t.id===trk,function(){trk=t.id;subj=null;sel=null;anim.subj=true;draw();});
+      }));
+      if(anim.trk){stagger(te);tr.classList.remove('reveal');void tr.offsetWidth;tr.classList.add('reveal');anim.trk=false;}
+    }
+    var list=subjList();
+    var sr=document.getElementById('t-subj-row');
+    sr.hidden=!list;
+    document.getElementById('t-subj-n').textContent=needTrk?'3. المادة':'2. المادة';
+    var note=document.getElementById('t-snote');
+    var t0=trackObj();
+    var nt=gr==='s1'?'أولى ثانوي مفيهاش مواد تخصص، كل الطلاب بيدرسوا نفس المواد.':(gr==='s2'&&t0&&t0.n2)||(gr==='s3'&&t0?'في تالتة ثانوي بتذاكر المواد التخصصية بتاعة مسارك.':'');
+    note.textContent=nt;note.hidden=!list||!nt;
+    if(list){
+      var se=document.getElementById('t-subj');
+      se.replaceChildren.apply(se,list.map(function(s){
+        return chip('tsubj',s[0],s[1]+(s[2]?' (تخصص)':''),s[0]===subj,function(){subj=s[0];sel=null;draw();});
+      }));
+      if(anim.subj){stagger(se);sr.classList.remove('reveal');void sr.offsetWidth;sr.classList.add('reveal');anim.subj=false;}
+    }
+    var hint=document.getElementById('t-hint');
+    hint.hidden=!!subj;
+    hint.textContent=!gr?'اختار صفك الدراسي الأول.':(needTrk&&!trk)?'دلوقتي اختار مسارك أو شعبتك.':'دلوقتي اختار المادة.';
+    var s=subjObj();
+    var ts=s?teachersFor():[];
+    var cnt=document.getElementById('t-count');
+    cnt.textContent=s?(ts.length?'اختار مدرس من '+ts.length+' في '+s[1]+' ('+TGL[gr]+')، من الأكثر مشتركين للأقل':''):'';
+    document.getElementById('t-list').innerHTML=ts.map(function(t){
+      var subs=t.s!=null
+        ?'<div class="subs"><strong>'+fmtSubs(t.s)+'</strong><span>مشترك'+(t.d?' (حتى '+esc(t.d)+')':'')+'</span></div>'
+        :'<div class="subs none"><span>عدد المشتركين غير متاح</span></div>';
+      var on=t.n===sel;
+      return '<article class="teacher'+(on?' on':'')+'">'
+        +'<div class="thead"><h3>'+esc(t.n)+'</h3>'+subs+'</div>'
+        +'<p>'+esc(t.note)+'</p>'
+        +'<button type="button" class="pick" data-n="'+esc(t.n)+'" aria-pressed="'+(on?'true':'false')+'">'+(on?'تم اختيار المدرس':'اختار المدرس وشوف مراجعاته')+'</button>'
+        +'<a class="go" href="'+chanSearch(t,'شرح '+s[1]+' '+TGL[gr])+'" target="_blank" rel="noopener noreferrer">شوف شرح '+esc(s[1])+' عند المدرس ده '+ARROW+'</a>'
+        +'</article>';
+    }).join('');
+    document.getElementById('t-empty').hidden=!(s&&ts.length===0);
+    if(s){
+      var q=s[1]+' '+TGL[gr]+' شرح';
+      document.getElementById('t-find').href=yt(q,false);
+      document.getElementById('t-find-label').textContent=s[1];
+    }
+    document.getElementById('t-find2').href=yt((s?s[1]+' ':'')+'شرح ثانوي',false);
+    drawReviews();
+    keepFocus(root,af);
+  }
+  document.getElementById('t-list').addEventListener('click',function(e){
+    var b=e.target.closest&&e.target.closest('.pick');
+    if(!b)return;
+    sel=b.dataset.n;openSum=null;qz=null;
+    draw();
+    var box=document.getElementById('t-reviews');
+    if(!box.hidden){
+      var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      box.scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'});
+    }
+  });
+  document.getElementById('t-reviews').addEventListener('click',function(e){
+    var b=e.target.closest&&e.target.closest('.sum[data-m]');
+    if(!b)return;
+    var m=b.dataset.m,k=curKey();
+    qz=null;openSum=(openSum&&openSum.k===k&&openSum.m===m)?null:{k:k,m:m};
+    drawReviews();
+    var nb=document.getElementById('t-reviews').querySelector('.sum[data-m="'+m+'"]');
+    if(nb)nb.focus();
+    var sb=document.getElementById('t-sumbox');
+    if(sb){var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;sb.scrollIntoView({behavior:reduce?'auto':'smooth',block:'nearest'});}
+  });
+  document.getElementById('t-reviews').addEventListener('click',function(e){
+    var b=e.target.closest&&e.target.closest('[data-qz]');
+    if(!b)return;
+    var a=b.dataset.qz,k=curKey(),t=sel&&TEACHERS.filter(function(x){return x.n===sel;})[0];
+    if(a==='open'){openSum=null;qz={k:k,m:b.dataset.m,phase:'start',items:[],i:0};}
+    else if(!qz||qz.k!==k)return;
+    else if(a==='close')qz=null;
+    else if(a==='retry'){qz.phase='start';qz.items=[];qz.i=0;}
+    else if(a==='start'){
+      var rw=t&&rowOf(t,qz.m);if(!rw||!rw.q)return;
+      qz.items=buildQuiz(rw.q,parseInt(b.dataset.n,10)||20);qz.i=0;qz.phase='run';
+    }
+    else if(a==='pick'){
+      var it=qz.items[qz.i];if(!it||it.p>=0)return;
+      it.p=parseInt(b.dataset.i,10);
+    }
+    else if(a==='next'){
+      if(qz.i>=qz.items.length-1)qz.phase='done';else qz.i++;
+    }
+    drawReviews();
+    var q=document.getElementById('t-quiz');
+    if(!q){var ob=document.querySelector('#t-reviews .quiz');var ob2=document.querySelector('#t-reviews [data-qz="open"]');if(ob2)ob2.focus();return;}
+    var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if(a==='pick'){var nx=document.getElementById('t-qnext');if(nx)nx.focus();}
+    else{q.focus({preventScroll:true});q.scrollIntoView({behavior:reduce?'auto':'smooth',block:'nearest'});}
+  });
+  draw();
+}
+
+
+
+/* ---------- home: scroll reveal + growing plant ---------- */
+function initHome(){
+  var home=document.getElementById('v-home');
+  var items=[].slice.call(home.querySelectorAll('.rv'));
+  var leaves=[].slice.call(home.querySelectorAll('.pl-it'));
+  var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var seen=0,prog=0.05;
+  function clamp(x){return Math.max(0,Math.min(1,x));}
+  function paint(){
+    leaves.forEach(function(l){l.style.transform='scale('+clamp((prog-parseFloat(l.dataset.t))/0.1)+')';});
+  }
+  function bump(p){if(p>prog){prog=p;paint();}}
+  if(reduce||!('IntersectionObserver' in window)){
+    items.forEach(function(i){i.classList.add('in');});
+    prog=1;
+  }else{
+    var io=new IntersectionObserver(function(es){
+      es.forEach(function(e){
+        if(e.isIntersecting&&!e.target.classList.contains('in')){
+          e.target.classList.add('in');
+          seen++;
+          bump(0.05+0.95*seen/items.length);
+          io.unobserve(e.target);
+        }
+      });
+    },{threshold:0.2,rootMargin:'0px 0px -6% 0px'});
+    items.forEach(function(i){io.observe(i);});
+    window.addEventListener('scroll',function(){
+      if(home.hidden)return;
+      var max=document.documentElement.scrollHeight-window.innerHeight;
+      if(max>0)bump(0.05+0.95*(window.scrollY/max));
+    },{passive:true});
+  }
+  paint();
+  var btn=document.getElementById('more-btn');
+  if(btn)btn.addEventListener('click',function(){
+    document.getElementById('story').scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'});
+  });
+}
+
+/* ---------- routing ---------- */
+var TH_ACC={guide:'#1F5FD8',teachers:'#A86400',courses:'#0E8559',sports:'#C42F35','c-code':'#34D399','c-math':'#4F46E5','c-biz':'#0E7490','c-skill':'#BE185D','c-design':'#A21CAF','s-foot':'#15803D','s-bask':'#C2410C','s-swim':'#0369A1','s-tt':'#1D4ED8','s-vol':'#B45309','s-mart':'#FF6B6B','s-fit':'#4D7C0F'};
+var TH_PAT={guide:'guide',teachers:'teachers','c-code':'code','c-math':'math','c-biz':'biz','c-skill':'skill','c-design':'design','s-foot':'foot','s-bask':'bask','s-swim':'swim','s-tt':'tt','s-vol':'vol','s-mart':'mart','s-fit':'fit'};
+var curView='home',CATSEL={c:null,s:null},thKey='home',patKey=null,patTimer=0;
+var bgpat=document.createElement('div');bgpat.id='bgpat';bgpat.setAttribute('aria-hidden','true');document.body.insertBefore(bgpat,document.body.firstChild);
+function themeKey(){
+  if(curView==='courses')return CATSEL.c?'c-'+CATSEL.c:'courses';
+  if(curView==='sports')return CATSEL.s?'s-'+CATSEL.s:'sports';
+  return curView;
+}
+function applyTheme(){
+  var k=themeKey();
+  if(!TH_ACC[k]){k=curView==='home'?'home':curView;}
+  var home=(curView==='home'||!TH_ACC[k]);
+  var want=home?'':(TH_PAT[k]||TH_PAT[curView]||'');
+  if(home)document.body.removeAttribute('data-th');else document.body.setAttribute('data-th',k);
+  thKey=home?'home':k;
+  if(want!==patKey){
+    patKey=want;
+    var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    clearTimeout(patTimer);
+    if(reduce||!bgpat.dataset.p){if(want)bgpat.dataset.p=want;else bgpat.removeAttribute('data-p');bgpat.style.opacity='';}
+    else{
+      bgpat.style.opacity='0';
+      patTimer=setTimeout(function(){if(want)bgpat.dataset.p=want;else bgpat.removeAttribute('data-p');bgpat.style.opacity='';},300);
+    }
+  }
+}
+var VIEWS=['home','guide','courses','teachers','sports'];
+var lastView=null;
+var pgbar=document.createElement('div');pgbar.id='pgbar';document.body.appendChild(pgbar);
+function route(){
+  var h=(location.hash||'#home').slice(1);
+  var id=VIEWS.indexOf(h)>-1?h:'home';
+  VIEWS.forEach(function(v){document.getElementById('v-'+v).hidden=(v!==id);});
+  document.querySelectorAll('nav a').forEach(function(a){
+    if(a.dataset.v===id)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current');
+  });
+  var el=document.getElementById('v-'+id);
+  if(lastView!==null&&lastView!==id){
+    var fwd=VIEWS.indexOf(id)>VIEWS.indexOf(lastView);
+    el.classList.remove('pg-f','pg-b');void el.offsetWidth;el.classList.add(fwd?'pg-f':'pg-b');
+    pgbar.style.background=TH_ACC[(id==='courses'&&CATSEL.c)?'c-'+CATSEL.c:(id==='sports'&&CATSEL.s)?'s-'+CATSEL.s:id]||TH_ACC[id]||'#1F5FD8';
+    pgbar.classList.remove('go');void pgbar.offsetWidth;pgbar.classList.add('go');
+  }
+  lastView=id;curView=id;applyTheme();
+  window.scrollTo(0,0);
+}
+window.addEventListener('hashchange',route);
+
+mountGuide();
+mount('c',COURSES,true,'كورس');
+mount('s',SPORTS,false,'مهارة');
+mountTeachers();
+initHome();
+route();
+})();
+</script>
+
+</body>
+</html>
