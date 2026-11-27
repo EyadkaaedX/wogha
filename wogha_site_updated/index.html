@@ -1486,12 +1486,16 @@ var TEACHERS=[
 "s": 1500000,
 "d": "2026-10",
 "g": [
+"s2",
 "s3"
 ],
+"gt": {
+"s2": "b"
+},
 "x": [
 "phys"
 ],
-"note": "فيزياء تالتة ثانوي، شرح ومراجعات 2026"
+"note": "فيزياء تانية بكالوريا (ورش) وتالتة ثانوي، شرح ومراجعات 2026"
 },
 {
 "n": "Mahmoud Radwan - إنجلشاوي",
@@ -1785,6 +1789,7 @@ function mountTeachers(){
   function rowOf(t,m){
     var rows=window.REVIEWS||[];
     var s=subjObj(),label=s?s[1]:'',gl=TGL[gr],tn=t.n.toLowerCase();
+    var out=null;
     for(var i=0;i<rows.length;i++){
       var r=rows[i];
       if(!r||r.length<5)continue;
@@ -1795,9 +1800,18 @@ function mountTeachers(){
       var v=String(r[4]).trim(),url='';
       if(/^[A-Za-z0-9_-]{11}$/.test(v))url='https://www.youtube.com/watch?v='+v;
       else if(/^https:\/\/(www\.|m\.)?(youtube\.com\/(watch|shorts|live|embed)|youtu\.be\/)/.test(v))url=v;
-      if(url)return {v:url,s:r.length>5?String(r[5]==null?'':r[5]).trim():'',q:Array.isArray(r[6])?r[6]:null};
+      if(url){
+        var sm0=r.length>5?String(r[5]==null?'':r[5]).trim():'',q0=Array.isArray(r[6])?r[6]:null;
+        if(!out)out={v:url,s:sm0,q:q0,vs:[url],sl:[]};
+        else{out.vs.push(url);if(!out.s)out.s=sm0;if(!out.q)out.q=q0;}
+        if(sm0)out.sl.push([out.vs.length-1,sm0]);
+      }
     }
-    return null;
+    if(out&&out.sl.length>1&&out.sl.every(function(x){return !/^https:\/\//.test(x[1]);})){
+      var ORD=['الأول','التاني','التالت','الرابع','الخامس'];
+      out.s=out.sl.map(function(x){return '## ملخص الجزء '+(ORD[x[0]]||(x[0]+1))+'\n'+x[1];}).join('\n');
+    }
+    return out;
   }
   function fmtSum(txt){
     var out='',cur=0;
@@ -1827,7 +1841,7 @@ function mountTeachers(){
     if(!openSum||openSum.k!==curKey())return '';
     var rw=rowOf(t,openSum.m);
     if(!rw||!rw.s||/^https:\/\//.test(rw.s))return '';
-    return '<div class="sumbox" id="t-sumbox"><h3>ملخص مراجعة '+esc(openSum.m)+'</h3>'+fmtSum(rw.s)+'</div>';
+    return '<div class="sumbox" id="t-sumbox"><h3>ملخص '+esc(revName(openSum.m))+'</h3>'+fmtSum(rw.s)+'</div>';
   }
   var qz=null;
   function shuf(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),x=a[i];a[i]=a[j];a[j]=x;}return a;}
@@ -1865,7 +1879,7 @@ function mountTeachers(){
     if(!rw||!rw.q)return '';
     var Q=rw.q,total=0;
     Q.forEach(function(g){total+=g.c.length;});
-    var head='<div class="qhead"><h3>اختبر نفسك: مراجعة '+esc(qz.m)+'</h3><button type="button" class="gback" data-qz="close">قفل الاختبار</button></div>';
+    var head='<div class="qhead"><h3>اختبر نفسك: '+esc(revName(qz.m))+'</h3><button type="button" class="gback" data-qz="close">قفل الاختبار</button></div>';
     if(qz.phase==='start'){
       return '<div class="quiz" id="t-quiz" tabindex="-1">'+head
         +'<p>أسئلة اختيار من متعدد على المراجعة دي ('+total+' سؤال متقسمين على '+Q.length+' أجزاء). بعد ما تخلص هنطلعلك نتيجتك وهنقولك إنت ضعيف في أنهي جزء.</p>'
@@ -1919,13 +1933,32 @@ function mountTeachers(){
       +'<div class="qtbl">'+tbl+'</div>'+wl
       +'<div class="macts"><button type="button" class="mact watch" data-qz="retry">اختبار تاني</button><button type="button" class="mact sum" data-qz="close">قفل</button></div></div>';
   }
+  var UNITS=[];for(var ui=1;ui<=10;ui++)UNITS.push([-1,'وحدة '+ui]);
+  function byUnits(t){return !!t&&gr==='s2'&&String(trk||'').charAt(0)==='b'&&subj==='fl1'&&String(t.n).indexOf('إنجلشاوي')>-1;}
+  function byWs(t){return !!t&&gr==='s2'&&String(trk||'').charAt(0)==='b'&&subj==='phys'&&String(t.n).indexOf('AbdelMaaboud')>-1;}
+  function wsList(t){
+    var rows=window.REVIEWS||[],s=subjObj(),label=s?s[1]:'',gl=TGL[gr],tn=t.n.toLowerCase(),seen={},list=[];
+    for(var i=0;i<rows.length;i++){
+      var r=rows[i];
+      if(!r||r.length<5)continue;
+      var rl=String(r[1]).trim();rl=ALIAS[rl]||rl;
+      var m=String(r[3]).trim(),mm=/^ورشة\s*(\d+)$/.exec(m);
+      if(!mm||rl!==label||String(r[2]).trim()!==gl)continue;
+      var nm=String(r[0]).trim().toLowerCase();
+      if(!nm||tn.indexOf(nm)<0||seen[m])continue;
+      seen[m]=1;list.push([+mm[1],m]);
+    }
+    list.sort(function(a,b){return a[0]-b[0];});
+    return list.map(function(x){return [-1,x[1]];});
+  }
+  function revName(m){return /^ورشة/.test(m)?m:'مراجعة '+m;}
   function drawReviews(){
     var box=document.getElementById('t-reviews');
     var s=subjObj();
     var t=sel&&TEACHERS.filter(function(x){return x.n===sel;})[0];
     if(!t||!s||teachersFor().indexOf(t)<0){box.hidden=true;box.innerHTML='';return;}
-    var gl=TGL[gr],out=0;
-    var cells=MONTHS.map(function(m){
+    var gl=TGL[gr],out=0,WS=byWs(t),P=WS?wsList(t):(byUnits(t)?UNITS:MONTHS);
+    var cells=P.map(function(m){
       var rw=rowOf(t,m[1]);
       if(!rw)return '<div class="month soon"><strong>'+m[1]+'</strong><span>لسه ما جاش</span></div>';
       out++;
@@ -1933,17 +1966,17 @@ function mountTeachers(){
       var sb=!sm?'<span class="mact off">الملخص قريبًا</span>'
         :isUrl?'<a class="mact sum" href="'+esc(sm)+'" target="_blank" rel="noopener noreferrer">ملخص المراجعة</a>'
         :'<button type="button" class="mact sum" data-m="'+m[1]+'" aria-expanded="'+(op?'true':'false')+'">ملخص المراجعة</button>';
-      return '<div class="month direct'+(isCur(m)?' cur':'')+'"><strong>مراجعة '+m[1]+'</strong><span class="badge-out">نزلت</span><div class="macts">'
-        +'<a class="mact watch" href="'+esc(rw.v)+'" target="_blank" rel="noopener noreferrer">شاهد الفيديو</a>'+sb
+      return '<div class="month direct'+(isCur(m)?' cur':'')+'"><strong>'+revName(m[1])+'</strong><span class="badge-out">نزلت</span><div class="macts">'
+        +rw.vs.map(function(u,i){return '<a class="mact watch" href="'+esc(u)+'" target="_blank" rel="noopener noreferrer">'+(rw.vs.length>1?'شاهد الجزء '+(i+1):'شاهد الفيديو')+'</a>';}).join('')+sb
         +(rw.q?'<button type="button" class="mact quiz" data-qz="open" data-m="'+m[1]+'">اختبر نفسك</button>':'')+'</div></div>';
     }).join('');
     box.hidden=false;
     box.innerHTML='<div class="rhead"><p class="kicker">مراجعات '+esc(t.n)+'</p>'
       +'<h2>'+esc(s[1])+' - '+esc(gl)+' - '+ay+'/'+(ay+1)+'</h2>'
-      +'<p class="why">نزل '+out+' من '+MONTHS.length+' مراجعات</p></div>'
-      +'<div class="months">'+cells+'</div>'+sumPanel(t)+quizPanel(t)
+      +'<p class="why">'+(WS?(out?'نزل '+out+(out>2?' ورش':' ورشة')+' لحد دلوقتي':'لسه مفيش ورش نزلت'):'نزل '+out+' من '+P.length+' مراجعات')+'</p></div>'
+      +(WS&&!out?'<p class="note">الورش هتظهر هنا أول ما المدرس ينزلها.</p>':'<div class="months">'+cells+'</div>')+sumPanel(t)+quizPanel(t)
       +(Array.isArray(window.REVIEWS)?'':'<p class="warnbox">فيه غلطة في ملف videos.js فالروابط مش بتظهر. اتأكد إن كل سطر جوه القايمة (بين [ و ]) وفي آخره فاصلة، وإن مفيش سطر تحت علامة ];</p>')
-      +'<p class="note">الشهر اللي عليه «نزلت» عليه فيديو المراجعة، والباقي هيتفتح أول ما المدرس ينزل مراجعته.</p>';
+      +(WS?'<p class="note">كل ورشة بتتضاف هنا أول ما المدرس ينزلها.</p>':'<p class="note">'+(P===UNITS?'الوحدة':'الشهر')+' اللي عليه «نزلت» عليه فيديو المراجعة، والباقي هيتفتح أول ما المدرس ينزل مراجعته.</p>');
   }
   var root=document.getElementById('v-teachers');
   var T1=[['ar','عربي'],['fl1','لغة أجنبية أولى'],['his','تاريخ'],['math','رياضيات'],['integ','علوم متكاملة'],['phil','فلسفة ومنطق']];
@@ -1985,7 +2018,7 @@ function mountTeachers(){
     if(!s||!gr)return [];
     var codes=TMAP[s[0]]||[];
     return TEACHERS.filter(function(t){
-      return codes.some(function(c){return t.x.indexOf(c)>-1;})&&(t.g.indexOf(gr)>-1||t.g.length===0);
+      return codes.some(function(c){return t.x.indexOf(c)>-1;})&&(t.g.indexOf(gr)>-1||t.g.length===0)&&(!t.gt||!t.gt[gr]||String(trk||'').charAt(0)===t.gt[gr]);
     });
   }
   function chanSearch(t,q){
